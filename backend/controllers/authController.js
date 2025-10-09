@@ -90,3 +90,42 @@ exports.getUserInfo = async (req, res) => {
            .json({messege: "Error registering user ", error: err.message});
     }
 };
+
+exports.updateUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { fullName, password } = req.body; 
+    if (fullName) user.fullName = fullName;
+
+    if (password) {
+      const bcrypt = require("bcryptjs");
+      user.password = await bcrypt.hash(password, 10);
+    }
+
+    if (req.file) {
+      const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+      user.profileImageUrl = imageUrl;
+    }
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        fullName: user.fullName,
+        email: user.email, 
+        profileImageUrl: user.profileImageUrl,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+
