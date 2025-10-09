@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const InfoCard =( { icon, label, value, color } ) => {
   return  <div className="flex gap-6 bd-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">

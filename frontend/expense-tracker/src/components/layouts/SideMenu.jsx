@@ -1,4 +1,4 @@
-import React from "react";
+
 import { SIDE_MENU_DATA } from "../../utils/data";
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";

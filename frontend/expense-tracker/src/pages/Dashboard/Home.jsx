@@ -1,4 +1,4 @@
-import React from "react";
+
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useUserAuth } from "../../hooks/useUserAuth";
 import { useState } from "react";
@@ -72,7 +72,7 @@ const Home =() =>{
             <InfoCard
             icon={<LuHandCoins/>}
             label= "Total Expense"
-            value= {addThousandsSeparator(dashboardData?.totalExpenses || 0)}
+            value= {addThousandsSeparator(dashboardData?.totalExpense || 0)}
             color= "bg-red-500"
             />
 

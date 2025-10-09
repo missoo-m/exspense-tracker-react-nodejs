@@ -1,4 +1,4 @@
-import React from "react";
+
 import CustomPieChart from "../Charts/CustomPieChart";
 import { useState } from "react";
 import { useEffect } from "react";

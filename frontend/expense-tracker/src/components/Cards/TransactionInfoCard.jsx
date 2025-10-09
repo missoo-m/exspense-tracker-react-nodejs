@@ -1,4 +1,4 @@
-import React from "react";
+
 import {
     LuUtensils,
     LuTrendingUp,
@@ -15,6 +15,7 @@ const TransactionInfoCard =({
     amount,
     type,
     hideDeleteBtn,
+    onDelete,
 }) => {
 
     const getAmountStyles = () =>  type === "income" ? "bg-green-50 text-green-500" : "bg-red-50 text-red-500";
@@ -33,9 +34,9 @@ const TransactionInfoCard =({
             <p className="">{date}</p>
         </div>
 
-        <div className="">
+        <div className="flex items-center gap-3">
             {!hideDeleteBtn && (
-                <button className=""
+                <button className="p-2 rounded-full text-gray-500 hover:text-red-500 hover:bg-gray-100 cursor-pointer transition relative z-10"
                 onClick={onDelete}>
                     <LuTrash2 size={18} />
                 </button>
