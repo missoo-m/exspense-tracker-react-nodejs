@@ -12,7 +12,7 @@ exports.registerUser = async (req, res) => {
         return res.status(400).json({ message: "All fields are required" });
     }
 
-    const {fullName, email, password, profileImageUrl } = req.body;
+    const {fullName, email, password, profileImageUrl, role } = req.body;
 
     if (!fullName || !email || !password) {
         return res.status(400).json({messege: "All field are required"});
@@ -24,11 +24,14 @@ exports.registerUser = async (req, res) => {
             return res.status(400).json({messege: "Email already in use"});
         }
 
+        const userRole = role === "ADMIN" ? "ADMIN" : "NORMAL";
+
         const user = await User.create({
             fullName,
             email,
             password,
             profileImageUrl,
+            role: userRole,
         });
 
         res.status(201).json({

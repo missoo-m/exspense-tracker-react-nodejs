@@ -11,6 +11,8 @@ const UserSchema = new mongoose.Schema ({
     },
     profileImageUrl:{ type: String, default: null
     },
+    role: { type: String, enum: ["NORMAL", "ADMIN"], default: "NORMAL" 
+    }, 
 
 }, 
   { timestamps: true }

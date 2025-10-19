@@ -15,6 +15,11 @@ import UserProvider from "./context/userContext";
 import Profile from "./pages/Dashboard/Profile";
 import {Toaster} from 'react-hot-toast';
 
+import AdminRoute from "./components/auth/AdminRoute"; // НОВЫЙ ИМПОРТ
+import ManageUsers from "./pages/Admin/ManageUsers"; // НОВЫЙ ИМПОРТ
+import ManageContent from "./pages/Admin/ManageContent"; // НОВЫЙ ИМПОРТ
+import News from "./pages/Dashboard/News"; // НОВЫЙ ИМПОРТ
+
 
 const App =() =>{
   return (
@@ -29,6 +34,22 @@ const App =() =>{
           <Route path="/income" element={<Income />}/>
           <Route path="/expense" element={<Expense />}/>
           <Route path="/profile-edit" element={<Profile />}/>
+
+          {/* НОВЫЙ ПУБЛИЧНЫЙ МАРШРУТ */}
+          <Route path="/news" element={<News />}/>
+          
+          {/* АДМИНИСТРАТИВНЫЕ МАРШРУТЫ, ЗАЩИЩЕННЫЕ ADMINROUTE */}
+          <Route path="/admin/users" element={
+            <AdminRoute>
+              <ManageUsers />
+            </AdminRoute>
+          }/>
+          <Route path="/admin/content" element={
+            <AdminRoute>
+              <ManageContent />
+            </AdminRoute>
+          }/>
+          
         </Routes>
       </Router>
     </div>

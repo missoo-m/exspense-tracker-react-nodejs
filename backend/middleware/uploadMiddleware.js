@@ -1,18 +1,18 @@
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {   // было cd → сделал cb
+    destination: (req, file, cb) => {   
         cb(null, 'uploads/');
     },
-    filename: (req, file, cb) => {      // было cd и ещё кириллическая "сb"
+    filename: (req, file, cb) => {      
         cb(null, `${Date.now()}-${file.originalname}`);
     },
 });
 
-const fileFilter = (req, file, cb) => {  // тоже делаем cb
+const fileFilter = (req, file, cb) => {  
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
     if (allowedTypes.includes(file.mimetype)) {
-        cb(null, true);   // если тип допустим → разрешаем
+        cb(null, true);   
     } else {
         cb(new Error('Only .jpeg, .jpg and .png formats are allowed'), false);
     }

@@ -9,6 +9,21 @@ export const API_PATHS ={
         UPDATE: "/api/v1/auth/update",
 
     },
+
+// НОВЫЕ ПУТИ ДЛЯ АДМИНА И ПУБЛИЧНОГО КОНТЕНТА
+    ADMIN: {
+        GET_ALL_USERS: "/api/v1/admin/users",
+        DELETE_USER: (userId) => `/api/v1/admin/users/${userId}`,
+        ADD_CONTENT: "/api/v1/admin/content", // для новостей/курсов
+        GET_ALL_CONTENT: "/api/v1/admin/content/admin", // для админ-панели
+    },
+    PUBLIC: {
+        GET_NEWS: "/api/v1/public/news",
+        GET_CURRENCIES: "/api/v1/public/currencies",
+    },
+
+
+
     DASHBOARD:{
         GET_DATA: "/api/v1/dashboard",
     },
