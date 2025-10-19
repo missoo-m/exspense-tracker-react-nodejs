@@ -6,11 +6,17 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { LuTrash2 } from "react-icons/lu";
+import Modal from "../../components/Modal"; // 💡 Предполагаем, что у вас есть компонент Modal
+import DeleteAlert from "../../components/DeleteAlert";
 
 const ManageUsers = () => {
     useUserAuth(); // Гарантирует, что мы аутентифицированы
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [openDeleteAlert, setOpenDeleteAlert] = useState({
+    show: false,
+    data: null,
+  })
 
     const fetchUsers = async () => {
         try {
@@ -24,17 +30,23 @@ const ManageUsers = () => {
         }
     };
 
-    const handleDelete = async (userId) => {
-        if (!window.confirm("Are you sure you want to delete this user?")) return;
-        
-        try {
-            await axiosInstance.delete(API_PATHS.ADMIN.DELETE_USER(userId));
-            toast.success("User deleted successfully!");
-            fetchUsers(); // Обновляем список
-        } catch (error) {
-            toast.error("Failed to delete user.");
-        }
-    };
+   const handleDelete = async (userId) => {
+    try {
+      await axiosInstance.delete(API_PATHS.ADMIN.DELETE_USER(userId));
+
+      setOpenDeleteAlert({ show: false, data: null });
+      toast.success("User details deleted successfully");
+      fetchIncomeDetails();
+    } catch (error) {
+      console.error(
+        "Error deleting user:",
+        error.response?.data?.message || error.message
+      );
+    }
+   };
+
+
+
 
     useEffect(() => {
         fetchUsers();
@@ -43,7 +55,7 @@ const ManageUsers = () => {
     return (
         <DashboardLayout activeMenu="Manage Users">
             <h2 className="text-2xl font-semibold mb-6">Manage Users</h2>
-            
+
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -64,8 +76,8 @@ const ManageUsers = () => {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.role}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button 
-                                            onClick={() => handleDelete(user._id)}
+                                        <button
+                                            onClick={() => setOpenDeleteAlert({ show: true, data: user._id })}
                                             className="text-red-600 hover:text-red-900"
                                             disabled={user.role === 'ADMIN'} // Защита от удаления себя или других админов
                                         >
@@ -76,6 +88,18 @@ const ManageUsers = () => {
                             ))}
                         </tbody>
                     </table>
+
+                    <Modal
+                        isOpen={openDeleteAlert.show}
+                        onClose={() => setOpenDeleteAlert({ show: false, data: null })}
+                        title="Delete user"
+                    >
+                        <DeleteAlert
+                            content="Are you  sure you want to delete this user deteil?"
+                            onDelete={() => deleteIncome(openDeleteAlert.data)}
+                        />
+                    </Modal>
+
                 </div>
             )}
         </DashboardLayout>

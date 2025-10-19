@@ -16,6 +16,11 @@ export const API_PATHS ={
         DELETE_USER: (userId) => `/api/v1/admin/users/${userId}`,
         ADD_CONTENT: "/api/v1/admin/content", // для новостей/курсов
         GET_ALL_CONTENT: "/api/v1/admin/content/admin", // для админ-панели
+        // 🔥 ДОБАВИТЬ ЭТОТ ПУТЬ
+        UPDATE_CURRENCIES: "/api/v1/admin/currency",
+        // НОВЫЕ ПУТИ ДЛЯ РЕДАКТИРОВАНИЯ И УДАЛЕНИЯ КОНТЕНТА
+        UPDATE_CONTENT: (id) => `/api/v1/admin/content/${id}`, 
+        DELETE_CONTENT: (id) => `/api/v1/admin/content/${id}`,
     },
     PUBLIC: {
         GET_NEWS: "/api/v1/public/news",
