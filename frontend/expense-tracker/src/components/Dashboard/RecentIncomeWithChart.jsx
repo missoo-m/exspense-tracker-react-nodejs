@@ -3,7 +3,14 @@ import CustomPieChart from "../Charts/CustomPieChart";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const COLORS =[ "#ffc6ff", "#ff8fab", "#ffcfd2"];
+const COLORS = [
+    "#ff8fab", 
+    "#ffc6ff", 
+    "#ffcfd2", 
+    "#e11d48", 
+    "#f0abfc", 
+    "#b5179e", 
+];
 
 const RecentIncomeWithChart =( { data, totalIncome}) =>{
 

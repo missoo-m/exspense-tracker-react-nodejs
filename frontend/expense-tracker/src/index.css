@@ -5,6 +5,8 @@
     --font-displa: "Poppins", "sans-serif";
     --breakpoint-3xl: 1920px;
     --color-primary: #ff8fab;
+    --color-expense-soft: #ffcfd2; 
+    --color-income-soft: #ffc6ff;  
 }
 
 @layer base {

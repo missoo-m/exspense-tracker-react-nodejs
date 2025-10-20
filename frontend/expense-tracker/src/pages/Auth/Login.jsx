@@ -7,7 +7,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
-
+import SocialLogin from "../../components/SocialLogin";
 
 const Login =() =>{
   const [email, setEmail] =useState("");
@@ -85,13 +85,13 @@ const Login =() =>{
             <button type="submit" className="btn-primary">
               LOGIN
             </button>
-
             <p className="text-[13px] text-slate-800 mt-3">
               Don't have an account? {" "}
               <Link className="font-medium text-primary underline" to="/signup">
                  SignUp
               </Link>
             </p>
+            <SocialLogin />
         </form>
       </div>
     </AuthLayout>

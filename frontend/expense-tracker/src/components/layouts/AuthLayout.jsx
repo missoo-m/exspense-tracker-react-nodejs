@@ -1,7 +1,8 @@
 import {LuTrendingUpDown} from "react-icons/lu"
-import YOUR_CARD_IMAGE from "../../assets/images/card2.png";
+import AnimatedLineChart from './AnimatedLineChart';
 
 const AuthLayout =({ children }) =>{
+
   return <div className="flex">
         <div className="w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12"> 
             <h2 className="text-lg font-medium text-black "> Expense Tracker</h2>
@@ -22,10 +23,11 @@ const AuthLayout =({ children }) =>{
                 />
             </div>
 
-            <img
-                src={YOUR_CARD_IMAGE} 
-                className="w-60 lg:w-[60%] absolute top-[30%] left-[35%] -translate-x-1/2 shadow-xl shadow-[#ff8fab]/20"
-            />
+            {/* 🔥🔥🔥 ИНТЕРАКТИВНЫЙ ГРАФИК (Заменяет изображение) 🔥🔥🔥 */}
+            <div className="absolute top-[30%] left-[38%] -translate-x-1/2 w-[65%] h-64 bg-white/80 backdrop-blur-sm rounded-xl shadow-2xl shadow-[#ff8fab]/30 py-8 px-4 z-10 border border-[#ffb3c6]">
+                <h3 className="text-sm font-medium text-gray-700 mb-2">Ежемесячный поток</h3>
+                <AnimatedLineChart />
+            </div>
 
             <div className="loader absolute bottom-8 left-2/3 -translate-x-1/2 w-80 lg:w-[90%] shadow-lg shadow-[#ff8fab]/15"> {/* Увеличиваем w-80 lg:w-[90%] */}
                 <div class="wrapper">
