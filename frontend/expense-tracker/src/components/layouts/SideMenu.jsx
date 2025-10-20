@@ -24,14 +24,12 @@ const SideMenu =( {activeMenu} ) =>{
         navigate("/login");
      };
  
-     // 1. ФИЛЬТРАЦИЯ МЕНЮ ПО РОЛИ
      const filteredMenuData = SIDE_MENU_DATA.filter((item) => {
-        if (!item.role) return true; // Если роль не указана, элемент виден всем
-        if (item.role === "NORMAL" && user?.role) return true; // Видно всем аутентифицированным
-        if (item.role === "ADMIN" && user?.role === "ADMIN") return true; // Видно только ADMIN
+        if (!item.role) return true; 
+        if (item.role === "NORMAL" && user?.role) return true; 
+        if (item.role === "ADMIN" && user?.role === "ADMIN") return true; 
         return false;
      });
-
 
 
 
@@ -57,8 +55,6 @@ const SideMenu =( {activeMenu} ) =>{
             </div>
 
 
-
-            {/* 2. ИСПОЛЬЗУЙТЕ ОТФИЛЬТРОВАННЫЕ ДАННЫЕ */}
             { filteredMenuData.map((item, index) => (
                 <button
                 key={ `menu_${index}`}

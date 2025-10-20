@@ -5,13 +5,12 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import CurrencyDisplay from "../../components/Cards/CurrencyDisplay";
+import TorchCube from "../../components/TorchCube"; 
 
 const News = () => {
-   // Гарантирует, что мы аутентифицированы
     useUserAuth(); 
     
     const [news, setNews] = useState([]);
-    // 💡 Используем правильное имя стейта и его сеттера
     const [currencyData, setCurrencyData] = useState(null); 
     const [loading, setLoading] = useState(true);
 
@@ -23,15 +22,16 @@ const News = () => {
             ]);
             
             setNews(newsRes.data);
-            // ✅ ИСПРАВЛЕНО: используем setCurrencyData
-            setCurrencyData(currencyRes.data); 
+            const processedCurrencyData = { 
+                ...currencyRes.data, 
+                date: currencyRes.data.date || new Date().toISOString()
+            };
+            
+            setCurrencyData(processedCurrencyData); 
             
         } catch (error) {
-            // Логика обработки 404 для курсов валют, чтобы не крашить страницу
             if (error.response?.status === 404 && error.config.url.includes('currencies')) {
-                setCurrencyData(null); // Если нет курсов, просто устанавливаем null
             } else {
-                 // В остальных случаях показываем ошибку
                 toast.error("Failed to load content.");
                 console.error("Fetch Content Error:", error);
             }
@@ -46,36 +46,48 @@ const News = () => {
 
     return (
         <DashboardLayout activeMenu="News & Currencies">
-            <h2 className="text-2xl font-semibold mb-6">Новости и Курсы валют</h2>
+            <h4 className="text-2xl font-bold text-gray-800 mb-8">Новости и Курсы валют</h4>
             
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
-                {/* Блок с курсами валют (будет занимать 1/3) */}
-                <div className="col-span-1 h-fit">
-                    {/* Передаем состояние загрузки и данные */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8"> 
+            
+                <div 
+                    className="col-span-1 h-fit"
+                >
                     <CurrencyDisplay currencyData={currencyData} loading={loading} />
+                    <TorchCube />
                 </div>
 
-                {/* Блок с новостями (будет занимать 2/3) */}
-                <div className="col-span-1 lg:col-span-2 space-y-4">
-                    <h3 className="text-xl font-bold mb-4">Последние новости</h3>
+                <div className="col-span-1 lg:col-span-2 space-y-6"> 
                     
-                    {/* Условный рендеринг новостей */}
+                    <h3 className="text-2xl font-bold text-[#ff8fab] mb-2">Последние новости</h3>
+                    
                     {loading && news.length === 0 ? (
-                        <p>Загрузка новостей...</p>
+                        // 🔥 СТИЛЬ ДЛЯ ЗАГРУЗКИ
+                        <div className="p-6 bg-white rounded-xl shadow-lg">
+                             <p className="text-center text-gray-500">Загрузка новостей...</p>
+                        </div>
                     ) : news.length > 0 ? (
-                        // 🔥 ИСПРАВЛЕНИЕ: Восстановить полный маппинг
+                        
                         news.map((item) => (
-                            <div key={item._id} className="card border-l-4 border-violet-500 p-4">
-                                <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
-                                {/* Используем item.createdAt или item.date в зависимости от API */}
-                                <p className="text-xs text-gray-500 mb-2">Опубликовано: {new Date(item.date || item.createdAt).toLocaleDateString()}</p>
-                                <p className="text-sm text-gray-600">{item.content}</p>
+                            <div 
+                                key={item._id} 
+                                className="
+                                    p-6 bg-white rounded-2xl shadow-md 
+                                    border-l-4 border-[#ff8fab] 
+                                    transition-all duration-300
+                                    hover:shadow-lg hover:translate-y-[-2px] 
+                                "
+                            >
+                                <h4 className="text-xl font-bold text-gray-800">{item.title}</h4>
+                                <p className="text-sm font-medium text-gray-500 mb-3">
+                                    Опубликовано: {new Date(item.date || item.createdAt).toLocaleDateString()}
+                                </p>
+                                <p className="text-base text-gray-700">{item.content}</p>
                             </div>
                         ))
-                        // ------------------------------------------
+                        
                     ) : (
-                        <p className="text-gray-600 card p-4">Нет доступных новостей.</p>
+                        <p className="text-gray-600 p-6 bg-white rounded-xl shadow-lg">Нет доступных новостей.</p>
                     )}
                 </div>
             </div>
