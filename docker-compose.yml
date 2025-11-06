@@ -1,0 +1,34 @@
+services:
+    mongo:
+      image: mongo:latest 
+      container_name: mongodb
+      ports:
+        - "27017:27017" 
+      volumes:
+        - mongo-data:/data/db
+    backend:
+      build:
+        context: ./backend 
+        dockerfile: Dockerfile
+      container_name: node_backend_dev
+      ports:
+        - "8000:8000"
+      volumes:
+        - ./backend:/app 
+        - /app/node_modules 
+      command: npm run dev
+    frontend:
+      build:
+        context: ./frontend/expense-tracker
+        dockerfile: Dockerfile
+      container_name: react_frontend_dev
+      ports:
+        - "5173:5173" 
+      volumes:
+        - ./frontend/expense-tracker:/app 
+        - /app/node_modules 
+      command: npm run dev
+
+volumes:
+  mongo-data:
+    driver: local
