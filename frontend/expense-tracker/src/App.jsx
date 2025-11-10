@@ -14,11 +14,10 @@ import Expense from "./pages/Dashboard/Expense";
 import UserProvider from "./context/userContext";
 import Profile from "./pages/Dashboard/Profile";
 import {Toaster} from 'react-hot-toast';
-
-import AdminRoute from "./components/auth/AdminRoute"; // НОВЫЙ ИМПОРТ
-import ManageUsers from "./pages/Admin/ManageUsers"; // НОВЫЙ ИМПОРТ
-import ManageContent from "./pages/Admin/ManageContent"; // НОВЫЙ ИМПОРТ
-import News from "./pages/Dashboard/News"; // НОВЫЙ ИМПОРТ
+import AdminRoute from "./components/auth/AdminRoute"; 
+import ManageUsers from "./pages/Admin/ManageUsers"; 
+import ManageContent from "./pages/Admin/ManageContent"; 
+import News from "./pages/Dashboard/News"; 
 
 
 const App =() =>{
@@ -34,11 +33,7 @@ const App =() =>{
           <Route path="/income" element={<Income />}/>
           <Route path="/expense" element={<Expense />}/>
           <Route path="/profile-edit" element={<Profile />}/>
-
-          {/* НОВЫЙ ПУБЛИЧНЫЙ МАРШРУТ */}
           <Route path="/news" element={<News />}/>
-          
-          {/* АДМИНИСТРАТИВНЫЕ МАРШРУТЫ, ЗАЩИЩЕННЫЕ ADMINROUTE */}
           <Route path="/admin/users" element={
             <AdminRoute>
               <ManageUsers />

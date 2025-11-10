@@ -29,7 +29,6 @@
     @apply w-full flex justify-between gap-3 text-sm text-black bg-slate-100 rounded px-4 py-3 mb-4 mt-3 border border-slate-200 outline-none;
 }
 
-/* Изменено: Насыщенный розовый фон, более темная тень, более светлый ховер */
 .btn-primary {
     @apply w-full text-sm font-medium text-white bg-primary shadow-lg shadow-[#ff8fab]/30 p-[10px] rounded-md my-1 hover:bg-[#ffb3c6] hover:text-[#e11d48];
 }
@@ -38,12 +37,10 @@
     @apply bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50;
 }
 
-/* Изменено: Розовый цвет при наведении */
 .card-btn {
     @apply flex items-center gap-3 text-[12px] font-medium text-gray-700 hover:text-[#e11d48] bg-gray-50 hover:bg-[#ffe5ec] px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer;
 }
 
-/* Изменено: Розовый цвет для кнопки добавления */
 .add-btn {
     @apply flex items-center gap-1.5 text-xs md:text-sm font-medium text-[#e11d48] whitespace-nowrap bg-[#ffe5ec] border border-[#ffb3c6] rounded-lg px-4 py-2 cursor-pointer;
 }
@@ -52,20 +49,16 @@
     @apply text-white bg-primary
 }
 
-/* ================================================= */
-/* 🔥 СТИЛИ ДЛЯ КОТА-ЗАГРУЗЧИКА 🔥 */
-/* ================================================= */
-/* From Uiverse.io by vinodjangid07 */
 .loader {
-    width: fit-content; /* Будет управляться классами Tailwind */
-    height: fit-content; /* Будет управляться классами Tailwind */
+    width: fit-content;
+    height: fit-content; 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .wrapper {
-    width: 100%; /* Занимает всю ширину родительского .loader */
-    height: 100%; /* Занимает всю высоту родительского .loader */
+    width: 100%; 
+    height: 100%; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -78,11 +71,11 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    transform: scale(1.5); /* Увеличиваем самого кота внутри контейнера */
-    margin-bottom: 20px; /* Отделяем кота от "стены" */
+    transform: scale(1.5); 
+    margin-bottom: 20px; 
 }
 .catbody {
-    width: 100px; /* Увеличиваем базовый размер */
+    width: 100px;
     height: auto;
 }
 .catbody path {
@@ -90,7 +83,7 @@
 }
 .tail {
     position: absolute;
-    width: 25px; /* Увеличиваем хвост */
+    width: 25px; 
     top: 50%;
     animation: tail 0.5s ease-in infinite alternate-reverse;
     transform-origin: top;
@@ -104,7 +97,7 @@
     100% { transform: rotateZ(-20deg); }
 }
 .wall {
-    width: 400px; /* Увеличиваем стену */
+    width: 400px; 
     height: auto;
     margin-top: 10px;
 }
@@ -115,20 +108,20 @@
 .text {
     display: flex;
     flex-direction: column;
-    width: 80px; /* Увеличиваем контейнер текста */
+    width: 80px; 
     position: absolute;
-    margin: 0px 0px 150px 180px; /* Смещаем ZZZs выше и правее */
+    margin: 0px 0px 150px 180px; 
 }
 .zzz {
     color: #e11d48;
     font-weight: 700;
-    font-size: 20px; /* Увеличиваем размер текста */
+    font-size: 20px; 
     animation: zzz 2s linear infinite;
 }
 .bigzzz {
     color: #e11d48;
     font-weight: 700;
-    font-size: 30px; /* Увеличиваем размер текста */
+    font-size: 30px; 
     margin-left: 15px;
     animation: zzz 2.3s linear infinite;
 }

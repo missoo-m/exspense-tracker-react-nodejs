@@ -23,7 +23,6 @@ const AuthLayout =({ children }) =>{
                 />
             </div>
 
-            {/* 🔥🔥🔥 ИНТЕРАКТИВНЫЙ ГРАФИК (Заменяет изображение) 🔥🔥🔥 */}
             <div className="absolute top-[30%] left-[38%] -translate-x-1/2 w-[65%] h-64 bg-white/80 backdrop-blur-sm rounded-xl shadow-2xl shadow-[#ff8fab]/30 py-8 px-4 z-10 border border-[#ffb3c6]">
                 <h3 className="text-sm font-medium text-gray-700 mb-2">Ежемесячный поток</h3>
                 <AnimatedLineChart />

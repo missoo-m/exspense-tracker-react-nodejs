@@ -1,5 +1,4 @@
 
-
 const CustomLegend =({payload}) =>{
   return (
     <div className="flex flex-wrap justify-center gap-2 mt-4 space-x-6">

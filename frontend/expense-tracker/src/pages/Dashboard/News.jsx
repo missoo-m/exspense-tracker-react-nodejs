@@ -46,7 +46,7 @@ const News = () => {
 
     return (
         <DashboardLayout activeMenu="News & Currencies">
-            <h4 className="text-2xl font-bold text-gray-800 mb-8">Новости и Курсы валют</h4>
+            <h4 className="text-2xl font-bold text-gray-800 mb-8">News & Currencies</h4>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8"> 
             
@@ -59,12 +59,11 @@ const News = () => {
 
                 <div className="col-span-1 lg:col-span-2 space-y-6"> 
                     
-                    <h3 className="text-2xl font-bold text-[#ff8fab] mb-2">Последние новости</h3>
+                    <h3 className="text-2xl font-bold text-[#ff8fab] mb-2">Latest news</h3>
                     
                     {loading && news.length === 0 ? (
-                        // 🔥 СТИЛЬ ДЛЯ ЗАГРУЗКИ
                         <div className="p-6 bg-white rounded-xl shadow-lg">
-                             <p className="text-center text-gray-500">Загрузка новостей...</p>
+                             <p className="text-center text-gray-500">Loading news...</p>
                         </div>
                     ) : news.length > 0 ? (
                         
@@ -80,14 +79,14 @@ const News = () => {
                             >
                                 <h4 className="text-xl font-bold text-gray-800">{item.title}</h4>
                                 <p className="text-sm font-medium text-gray-500 mb-3">
-                                    Опубликовано: {new Date(item.date || item.createdAt).toLocaleDateString()}
+                                    Published: {new Date(item.date || item.createdAt).toLocaleDateString()}
                                 </p>
                                 <p className="text-base text-gray-700">{item.content}</p>
                             </div>
                         ))
                         
                     ) : (
-                        <p className="text-gray-600 p-6 bg-white rounded-xl shadow-lg">Нет доступных новостей.</p>
+                        <p className="text-gray-600 p-6 bg-white rounded-xl shadow-lg">No news available.</p>
                     )}
                 </div>
             </div>

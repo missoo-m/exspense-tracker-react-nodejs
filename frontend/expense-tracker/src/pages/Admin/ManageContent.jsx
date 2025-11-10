@@ -1,4 +1,3 @@
-// pages/Admin/ManageContent.jsx
 
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useUserAuth } from "../../hooks/useUserAuth";
@@ -82,11 +81,11 @@ const ManageContent = () => {
         try {
             await axiosInstance.put(updatePath, dataToSend);
 
-            toast.success("Элемент контента успешно обновлен.");
+            toast.success("The content element is being updated successfully.");
             setEditingItem(null);
             fetchContent();
         } catch (error) {
-            toast.error(error.response?.data?.message || "Ошибка при обновлении контента.");
+            toast.error(error.response?.data?.message || "Error updating content.");
             console.error("Update Content Error:", error);
         }
     };
@@ -171,7 +170,7 @@ const ManageContent = () => {
         } catch (error) {
             let errorMessage = "Failed to add content.";
             if (newContent.type === 'currency' && error instanceof SyntaxError) {
-                errorMessage = "Invalid ввод format for currency rates.";
+                errorMessage = "Invalid input format for currency rates.";
             } else {
                 errorMessage = error.response?.data?.message || errorMessage;
             }
@@ -188,9 +187,9 @@ const ManageContent = () => {
             try {
                 const parsedContent = JSON.parse(item.content);
                 const keys = Object.keys(parsedContent);
-                return `Курсы: ${keys.slice(0, 3).join(', ')}... (${keys.length} всего)`;
+                return `Currency: ${keys.slice(0, 3).join(', ')}... (${keys.length} total)`;
             } catch (e) {
-                return 'Некорректный ввод (пожалуйста, обновите курсы)';
+                return 'Incorrect input (please update the currency)';
             }
         }
         return item.content.substring(0, 150) + (item.content.length > 150 ? '...' : '');
@@ -199,7 +198,7 @@ const ManageContent = () => {
     return (
         <DashboardLayout activeMenu="Manage Content">
 
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Управление публичным контентом</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Public Content Management</h2>
             <div className="mb-8 p-8 bg-white rounded-3xl 
         shadow-[0px_10px_30px_rgba(251,111,146,0.12),_0px_0px_0px_rgba(255,255,255,1)] 
         transition-all duration-500">
@@ -207,7 +206,7 @@ const ManageContent = () => {
                 <form onSubmit={handleAddContent}>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div className="md:col-span-1">
-                            <label className="text-sm font-medium text-slate-600 mb-1 block">Тип контента</label>
+                            <label className="text-sm font-medium text-slate-600 mb-1 block">Content type</label>
                             <div
                                 className="
     w-full p-0 flex items-center 
@@ -229,15 +228,15 @@ const ManageContent = () => {
                                         py-2 pr-4 text-base cursor-pointer appearance-none
                                     "
                                 >
-                                    <option value="news">Новость</option>
-                                    <option value="currency">Курсы валют</option>
+                                    <option value="news">News</option>
+                                    <option value="currency">Currency</option>
                                 </select>
                             </div>
                         </div>
 
                         {newContent.type === 'news' && (
                             <div className="md:col-span-2">
-                                <label className="text-sm font-medium text-slate-600 mb-1 block">Заголовок</label>
+                                <label className="text-sm font-medium text-slate-600 mb-1 block">Heading</label>
 
                                 <div
                                     className="
@@ -255,7 +254,7 @@ const ManageContent = () => {
                                         name="title"
                                         value={newContent.title}
                                         onChange={handleInputChange}
-                                        placeholder="Введите заголовок новости"
+                                        placeholder="Enter news title"
                                         type="text"
                                         className="
                                             w-full bg-transparent outline-none 
@@ -271,7 +270,7 @@ const ManageContent = () => {
                     <div className="mb-4">
                         {newContent.type === 'currency' ? (
                             <div>
-                                <h4 className="text-lg font-bold text-slate-700 mb-4">Установите курсы валют</h4>
+                                <h4 className="text-lg font-bold text-slate-700 mb-4">Set currency</h4>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {Object.entries(newContent.currencyRates).map(([code, rate]) => (
                                         <div key={code}>
@@ -308,14 +307,14 @@ const ManageContent = () => {
                         ) : (
                             <>
                                 <label className="text-sm font-medium text-slate-600 mb-1 block">
-                                    Содержимое новости
+                                    News content
                                 </label>
                                 <textarea
                                     name="content"
                                     value={newContent.content}
                                     onChange={handleInputChange}
                                     rows={6}
-                                    placeholder='Опишите новость подробно. Используйте абзацы для лучшей читаемости.'
+                                    placeholder='Describe the news in detail. Use paragraphs for better readability.'
                                     className="
     w-full resize-y p-4 text-base 
     rounded-xl shadow-inner bg-white border border-gray-200
@@ -343,15 +342,15 @@ const ManageContent = () => {
     "
                     >
                         <LuPlus size={18} />
-                        {newContent.type === 'currency' ? 'ОБНОВИТЬ КУРС ВАЛЮТ' : 'ДОБАВИТЬ НОВОСТЬ'}
+                        {newContent.type === 'currency' ? 'UPDATE THE CURRENCY RATE' : 'ADD NEWS'}
                     </button>
                 </form>
             </div>
 
-            <h3 className="text-xl font-semibold mb-4">Существующий контент ({contentList.length})</h3>
+            <h3 className="text-xl font-semibold mb-4">Existing Content({contentList.length})</h3>
 
             {loading ? (
-                <p>Загрузка...</p>
+                <p>Loading...</p>
             ) : (
                 <div className="space-y-4">
                     {contentList.map((item) => (
@@ -377,13 +376,13 @@ const ManageContent = () => {
                                 </span>
 
                                 <h4 className="text-xl font-bold text-gray-800 mt-2">
-                                    {item.title || 'Курсы валют (см. детали)'}
+                                    {item.title || 'Exchange rates (see details)'}
                                 </h4>
                                 <p className="text-sm text-gray-600 mt-2">
                                     {formatContentPreview(item)}
                                 </p>
                                 <p className="text-xs text-gray-400 mt-3">
-                                    Опубликовано: {new Date(item.date).toLocaleString()}
+                                    Published: {new Date(item.date).toLocaleString()}
                                 </p>
                             </div>
 
@@ -396,7 +395,7 @@ const ManageContent = () => {
     hover:bg-teal-600 hover:text-white 
     transition duration-200
 "
-                                        title="Редактировать новость"
+                                        title="Edit news"
                                     >
                                         <LuPencil size={20} />
                                     </button>
@@ -409,51 +408,51 @@ const ManageContent = () => {
                                         hover:bg-white hover:text-red-600 
                                         transition duration-200
                                     "
-                                    title="Удалить контент"
+                                    title="Delete content"
                                 >
                                     <LuTrash2 size={20} />
                                 </button>
                             </div>
                         </div>
                     ))}
-                    {!contentList.length && <p className="text-gray-500 p-4 rounded-xl shadow-lg bg-white">Контент еще не был добавлен.</p>}
+                    {!contentList.length && <p className="text-gray-500 p-4 rounded-xl shadow-lg bg-white">No content has been added yet.</p>}
                 </div>
             )}
 
             {editingItem && (
                 <Modal
-                    title={`Редактирование: ${editingItem.title || 'Курсы валют'}`}
+                    title={`Editing: ${editingItem.title || 'Exchange rates'}`}
                     isOpen={!!editingItem}
                     onClose={() => setEditingItem(null)}
                 >
                     <form onSubmit={handleUpdate} className="space-y-4">
                         {editingItem.type === 'news' && (
                             <div>
-                                <label className="text-[13px] text-slate-800">Заголовок</label>
+                                <label className="text-[13px] text-slate-800">Heading</label>
                                 <input
                                     name="title"
                                     value={formData.title}
                                     onChange={handleEditFormChange}
-                                    placeholder="Введите заголовок новости"
+                                    placeholder="Enter news title"
                                     type="text"
                                     className="input-box w-full"
                                 />
                             </div>
                         )}
                         <div>
-                            <label className="text-[13px] text-slate-800">Содержимое</label>
+                            <label className="text-[13px] text-slate-800">Content</label>
                             <textarea
                                 name="content"
                                 value={formData.content}
                                 onChange={handleEditFormChange}
                                 rows={4}
                                 className="input-box w-full resize-y"
-                                placeholder="Введите содержимое..."
+                                placeholder="Enter content..."
                                 disabled={editingItem.type === 'currency'}
                             />
                             {editingItem.type === 'currency' && (
                                 <p className="text-xs text-red-500 mt-1">
-                                    Курсы валют редактируются только через форму "Добавить новый контент" (PUT-запрос).
+                                    Exchange rates can only be edited through the "Add new content" form (PUT request).
                                 </p>
                             )}
                         </div>
@@ -464,14 +463,14 @@ const ManageContent = () => {
                                 onClick={() => setEditingItem(null)}
                                 className="secondary-btn"
                             >
-                                Отмена
+                                Cancel
                             </button>
                             <button
                                 type="submit"
                                 className="add-btn"
                                 disabled={editingItem.type === 'currency'}
                             >
-                                СОХРАНИТЬ ИЗМЕНЕНИЯ
+                                SAVE CHANGES
                             </button>
                         </div>
                     </form>
@@ -483,13 +482,13 @@ const ManageContent = () => {
 
                 onClose={() => setOpenDeleteAlert({ show: false, data: null })}
 
-                title="Delete элемент"
+                title="Delete element"
 
             >
 
                 <DeleteAlert
 
-                    content="Are you sure you want to delete this элемент deteil?"
+                    content="Are you sure you want to delete this element deteil?"
 
                     onDelete={() => handleDelete(openDeleteAlert.data)}
 

@@ -7,8 +7,8 @@ const authRoutes = require("./routes/authRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
-const adminRoutes = require("./routes/adminRoutes"); // НОВЫЙ
-const publicRoutes = require("./routes/publicRoutes"); // НОВЫЙ
+const adminRoutes = require("./routes/adminRoutes"); 
+const publicRoutes = require("./routes/publicRoutes"); 
 
 const app = express();
 
@@ -17,6 +17,7 @@ app.use(
         origin : process.env.CLIENT_URL || "*",
         methods : ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders : ["Content-Type", "Authorization"],
+        credentials: true,
     })
 );
 
@@ -28,8 +29,8 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
-app.use("/api/v1/admin", adminRoutes); // НОВЫЙ МАРШРУТ АДМИНИСТРАТОРА
-app.use("/api/v1/public", publicRoutes); // НОВЫЙ ПУБЛИЧНЫЙ МАРШРУТ
+app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/public", publicRoutes); 
 
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

@@ -54,11 +54,11 @@ const ManageUsers = () => {
 
     return (
         <DashboardLayout activeMenu="Manage Users">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Управление пользователями</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Manage Users</h2>
 
             {loading ? (
                 <div className="p-6 bg-white rounded-xl shadow-lg">
-                    <p className="text-center text-gray-500">Загрузка...</p>
+                    <p className="text-center text-gray-500">Loading...</p>
                 </div>
             ) : (
                 <div
@@ -72,10 +72,10 @@ const ManageUsers = () => {
 
                         <thead className="bg-[#ffe5ec] rounded-t-2xl">
                             <tr>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Полное имя</th>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Full name</th>
                                 <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Email</th>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Роль</th>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Действия</th>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Role</th>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
 
@@ -109,7 +109,7 @@ const ManageUsers = () => {
                                                 }
                                 `}
                                             disabled={user.role === 'ADMIN'}
-                                            title={user.role === 'ADMIN' ? 'Нельзя удалить администратора' : 'Удалить пользователя'}
+                                            title={user.role === 'ADMIN' ? 'Cant remove administrator' : 'Delete user'}
                                         >
                                             <LuTrash2 size={18} />
                                         </button>
@@ -121,10 +121,10 @@ const ManageUsers = () => {
                     <Modal
                         isOpen={openDeleteAlert.show}
                         onClose={() => setOpenDeleteAlert({ show: false, data: null })}
-                        title="Удалить пользователя"
+                        title="Delete user"
                     >
                         <DeleteAlert
-                            content={`Вы уверены, что хотите удалить пользователя?`}
+                            content={`Are you sure you want to delete the user?`}
                             onDelete={() => handleDelete(openDeleteAlert.data)}
                         />
                     </Modal>

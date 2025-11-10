@@ -1,11 +1,9 @@
 const User = require("../models/User");
-const News = require("../models/News"); // Будет новая модель
+const News = require("../models/News"); 
 const Currency = require('../models/Currency');
 
-// Получить список всех пользователей
 exports.getAllUsers = async (req, res) => {
     try {
-        // Исключаем поле password
         const users = await User.find().select("-password"); 
         res.json(users);
     } catch (error) {
@@ -13,7 +11,6 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-// Удалить пользователя
 exports.deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -29,9 +26,6 @@ exports.deleteUser = async (req, res) => {
     }
 };
 
-// --- Функции для управления новостями/курсами валют ---
-
-// Добавить новость/курс валют
 exports.addNews = async (req, res) => {
     try {
         const { title, content, type } = req.body; // type: 'news' или 'currency'
@@ -44,7 +38,7 @@ exports.addNews = async (req, res) => {
             title,
             content,
             type,
-            authorId: req.user.id, // ID администратора
+            authorId: req.user.id, 
         });
 
         await newPost.save();
@@ -54,7 +48,6 @@ exports.addNews = async (req, res) => {
     }
 };
 
-// Получить все новости/курсы (для панели управления)
 exports.getAllContent = async (req, res) => {
     try {
         const content = await News.find().sort({ date: -1 });
@@ -64,16 +57,10 @@ exports.getAllContent = async (req, res) => {
     }
 };
 
-// -----------------------------------------------------------
-// 🔥 НОВАЯ ФУНКЦИЯ: Обновить новость
-// -----------------------------------------------------------
 exports.updateNews = async (req, res) => {
     try {
         const { id } = req.params;
-        // Извлекаем поля, которые можно редактировать
         const { title, content, type } = req.body;
-
-        // Создаем объект обновлений, добавляя текущее время в поле date/updatedAt
         const updates = { 
             title, 
             content, 
@@ -84,7 +71,6 @@ exports.updateNews = async (req, res) => {
         const updatedNews = await News.findByIdAndUpdate(
             id,
             updates,
-            // { new: true } возвращает обновленный документ; { runValidators: true } проверяет схему
             { new: true, runValidators: true } 
         );
 
@@ -99,9 +85,6 @@ exports.updateNews = async (req, res) => {
     }
 };
 
-// -----------------------------------------------------------
-// 🔥 НОВАЯ ФУНКЦИЯ: Удалить новость
-// -----------------------------------------------------------
 exports.deleteNews = async (req, res) => {
     try {
         const { id } = req.params;
@@ -118,9 +101,6 @@ exports.deleteNews = async (req, res) => {
         res.status(500).json({ message: "Server Error during deleting news", error });
     }
 };
-// -----------------------------------------------------------
-// 1. Получить текущие курсы (для отображения в админке)
-// -----------------------------------------------------------
 exports.getCurrencyRates = async (req, res) => {
     try {
         const rates = await Currency.findOne({ baseCurrency: 'BYN' }).select('-baseCurrency -source -_id -__v');
@@ -136,12 +116,6 @@ exports.getCurrencyRates = async (req, res) => {
     }
 };
 
-// -----------------------------------------------------------
-// 2. Обновить или создать курсы (заполняется админом)
-// -----------------------------------------------------------
-// controllers/adminController.js
-
-// 2. Обновить или создать курсы (заполняется админом)
 exports.updateCurrencyRates = async (req, res) => {
     const { rates } = req.body;
 
@@ -149,11 +123,8 @@ exports.updateCurrencyRates = async (req, res) => {
         return res.status(400).json({ message: "Invalid or missing rates data." });
     }
     
-    // 1. Создаем объект для динамического точечного обновления с использованием точечной нотации.
-    // Пример: { 'rates.USD': 3.28, 'rates.EUR': 3.45 }
     const setOperations = {};
     for (const currencyCode in rates) {
-        // Проверяем, что значение является числом, прежде чем добавлять его в операцию обновления
         if (typeof rates[currencyCode] === 'number') { 
             setOperations[`rates.${currencyCode}`] = rates[currencyCode];
         }
@@ -163,18 +134,15 @@ exports.updateCurrencyRates = async (req, res) => {
         return res.status(400).json({ message: "No valid number rates provided for update." });
     }
     
-    // Добавляем обновление поля source и updatedAt
     setOperations['source'] = 'Manual Entry';
 
     try {
         const updatedRates = await Currency.findOneAndUpdate(
             { baseCurrency: 'BYN' },
-            // 🔥 Используем $set для точечного обновления rates и source
             { $set: setOperations }, 
-            { new: true, upsert: true } // new: true - вернуть обновленный документ; upsert: true - создать, если не найден
+            { new: true, upsert: true } 
         );
 
-        // Убираем __v, _id и baseCurrency из ответа для чистоты
         const responseData = updatedRates.toObject();
         delete responseData.__v;
         delete responseData._id;
@@ -188,11 +156,9 @@ exports.updateCurrencyRates = async (req, res) => {
     } catch (error) {
         console.error("Error updating currency rates by admin:", error.message);
         
-        // 🔥 ВРЕМЕННОЕ ИЗМЕНЕНИЕ: Включаем details для отладки
         res.status(500).json({ 
             message: "Server error updating currency rates.", 
-            details: error.message // Возвращаем сообщение об ошибке
+            details: error.message 
    });
     }
 };
-// Добавьте сюда другие существующие функции adminController

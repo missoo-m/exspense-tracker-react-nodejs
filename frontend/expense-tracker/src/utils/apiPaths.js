@@ -1,7 +1,6 @@
 //export const BASE_URL = "http://backend:8000";
 export const BASE_URL = "http://localhost:8000";
 
-//utils/apiPaths.js
 export const API_PATHS ={
     AUTH: {
         LOGIN: "/api/v1/auth/login",
@@ -11,15 +10,12 @@ export const API_PATHS ={
 
     },
 
-// НОВЫЕ ПУТИ ДЛЯ АДМИНА И ПУБЛИЧНОГО КОНТЕНТА
     ADMIN: {
         GET_ALL_USERS: "/api/v1/admin/users",
         DELETE_USER: (userId) => `/api/v1/admin/users/${userId}`,
-        ADD_CONTENT: "/api/v1/admin/content", // для новостей/курсов
-        GET_ALL_CONTENT: "/api/v1/admin/content/admin", // для админ-панели
-        // 🔥 ДОБАВИТЬ ЭТОТ ПУТЬ
+        ADD_CONTENT: "/api/v1/admin/content", 
+        GET_ALL_CONTENT: "/api/v1/admin/content/admin", 
         UPDATE_CURRENCIES: "/api/v1/admin/currency",
-        // НОВЫЕ ПУТИ ДЛЯ РЕДАКТИРОВАНИЯ И УДАЛЕНИЯ КОНТЕНТА
         UPDATE_CONTENT: (id) => `/api/v1/admin/content/${id}`, 
         DELETE_CONTENT: (id) => `/api/v1/admin/content/${id}`,
     },
@@ -27,8 +23,6 @@ export const API_PATHS ={
         GET_NEWS: "/api/v1/public/news",
         GET_CURRENCIES: "/api/v1/public/currencies",
     },
-
-
 
     DASHBOARD:{
         GET_DATA: "/api/v1/dashboard",

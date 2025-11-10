@@ -8,7 +8,6 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 
-// Демо-данные для графика
 const data = [
   { name: 'Янв', income: 4000, expenses: 2400 },
   { name: 'Фев', income: 3000, expenses: 1398 },
@@ -18,13 +17,9 @@ const data = [
   { name: 'Июн', income: 2390, expenses: 3800 },
 ];
 
-// Розовые цвета из вашей палитры
-const PRIMARY_PINK = '#e11d48'; // Насыщенный розовый
-const LIGHT_PINK = '#ff8fab';   // Средний розовый
+const PRIMARY_PINK = '#e11d48'; 
+const LIGHT_PINK = '#ff8fab';  
 
-/**
- * Анимированный компонент линейного графика для отображения финансов.
- */
 const AnimatedLineChart = () => {
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -65,7 +60,7 @@ const AnimatedLineChart = () => {
           fill="url(#colorIncome)" 
           dot={false}
           strokeWidth={3}
-          isAnimationActive={true} // Анимация
+          isAnimationActive={true} 
           animationDuration={1500}
         />
 
@@ -78,8 +73,8 @@ const AnimatedLineChart = () => {
           fill="url(#colorExpenses)" 
           dot={false}
           strokeWidth={3}
-          isAnimationActive={true} // Анимация
-          animationDuration={2000} // Чуть медленнее для разнообразия
+          isAnimationActive={true}
+          animationDuration={2000} 
         />
         
       </AreaChart>

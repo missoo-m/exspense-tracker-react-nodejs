@@ -10,7 +10,7 @@ services:
       build:
         context: ./backend 
         dockerfile: Dockerfile
-      container_name: node_backend_dev
+      container_name: node_backend
       ports:
         - "8000:8000"
       volumes:
@@ -21,7 +21,7 @@ services:
       build:
         context: ./frontend/expense-tracker
         dockerfile: Dockerfile
-      container_name: react_frontend_dev
+      container_name: react_frontend
       ports:
         - "5173:5173" 
       volumes:
