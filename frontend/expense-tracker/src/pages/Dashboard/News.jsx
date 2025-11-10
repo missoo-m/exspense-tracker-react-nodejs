@@ -46,9 +46,9 @@ const News = () => {
 
     return (
         <DashboardLayout activeMenu="News & Currencies">
-            <h4 className="text-2xl font-bold text-gray-800 mb-8">News & Currencies</h4>
+            <h4 className="text-xl font-bold text-gray-800 mb-6">News & Currencies</h4>
             
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8"> 
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6"> 
             
                 <div 
                     className="col-span-1 h-fit"
@@ -57,13 +57,13 @@ const News = () => {
                     <TorchCube />
                 </div>
 
-                <div className="col-span-1 lg:col-span-2 space-y-6"> 
+                <div className="col-span-1 lg:col-span-2 space-y-4"> 
                     
-                    <h3 className="text-2xl font-bold text-[#ff8fab] mb-2">Latest news</h3>
+                    <h3 className="text-xl font-bold text-[#ff8fab] mb-1">Latest News</h3>
                     
                     {loading && news.length === 0 ? (
-                        <div className="p-6 bg-white rounded-xl shadow-lg">
-                             <p className="text-center text-gray-500">Loading news...</p>
+                        <div className="p-4 bg-white rounded-lg shadow-md">
+                             <p className="text-center text-sm text-gray-500">Loading news...</p>
                         </div>
                     ) : news.length > 0 ? (
                         
@@ -71,22 +71,25 @@ const News = () => {
                             <div 
                                 key={item._id} 
                                 className="
-                                    p-6 bg-white rounded-2xl shadow-md 
-                                    border-l-4 border-[#ff8fab] 
+                                    /* Уменьшен padding: p-6 -> p-4 */
+                                    p-4 bg-white rounded-lg shadow-sm 
+                                    /* Уменьшена акцентная линия: border-l-4 -> border-l-3 */
+                                    border-l-3 border-[#ff8fab] 
                                     transition-all duration-300
-                                    hover:shadow-lg hover:translate-y-[-2px] 
+                                    /* Уменьшена тень: hover:shadow-lg -> hover:shadow-md */
+                                    hover:shadow-md hover:translate-y-[-1px] 
                                 "
                             >
-                                <h4 className="text-xl font-bold text-gray-800">{item.title}</h4>
-                                <p className="text-sm font-medium text-gray-500 mb-3">
+                                <h4 className="text-lg font-bold text-gray-800">{item.title}</h4>
+                                <p className="text-xs font-medium text-gray-500 mb-2">
                                     Published: {new Date(item.date || item.createdAt).toLocaleDateString()}
                                 </p>
-                                <p className="text-base text-gray-700">{item.content}</p>
+                                <p className="text-sm text-gray-700">{item.content}</p>
                             </div>
                         ))
                         
                     ) : (
-                        <p className="text-gray-600 p-6 bg-white rounded-xl shadow-lg">No news available.</p>
+                        <p className="text-gray-600 p-4 bg-white rounded-lg shadow-md">No news available.</p>
                     )}
                 </div>
             </div>

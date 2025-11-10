@@ -54,7 +54,7 @@ const ManageUsers = () => {
 
     return (
         <DashboardLayout activeMenu="Manage Users">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Manage Users</h2>
+            <h2 className="text-xl font-bold text-gray-800 mb-6">Manage Users</h2>
 
             {loading ? (
                 <div className="p-6 bg-white rounded-xl shadow-lg">

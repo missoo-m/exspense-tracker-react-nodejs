@@ -198,7 +198,7 @@ const ManageContent = () => {
     return (
         <DashboardLayout activeMenu="Manage Content">
 
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Public Content Management</h2>
+            <h2 className="text-xl font-bold text-gray-800 mb-6">Public Content Management</h2>
             <div className="mb-8 p-8 bg-white rounded-3xl 
         shadow-[0px_10px_30px_rgba(251,111,146,0.12),_0px_0px_0px_rgba(255,255,255,1)] 
         transition-all duration-500">

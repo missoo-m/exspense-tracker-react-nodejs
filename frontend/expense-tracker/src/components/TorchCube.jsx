@@ -1,11 +1,10 @@
-
 import './TorchCube.css'; 
 
 const TorchCube = () => {
     return (
-        <div className="p-6 bg-gray-800 rounded-2xl shadow-xl flex flex-col justify-between items-center h-96 relative"> 
+        <div className="p-4 bg-gray-800 rounded-xl shadow-lg flex flex-col justify-between items-center h-80 relative"> 
             
-            <div className="flex-grow w-full flex justify-center items-start pt-8">
+            <div className="flex-grow w-full flex justify-center items-start pt-6">
                 <label className="container" htmlFor="torch-checkbox">
                     <input type="checkbox" id="torch-checkbox" />
                     
@@ -48,8 +47,8 @@ const TorchCube = () => {
                 </label>
             </div>
            
-            <div className="w-full text-center pb-2"> 
-                 <p className="text-white text-xs font-light tracking-wider opacity-60">
+            <div className="w-full text-center pb-1"> 
+                 <p className="text-white text-[10px] font-light tracking-wider opacity-60">
                     * Здесь могла быть ваша реклама
                  </p>
             </div>
