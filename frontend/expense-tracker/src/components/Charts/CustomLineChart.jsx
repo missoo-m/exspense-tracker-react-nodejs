@@ -27,7 +27,7 @@ const CustomLineChart =({data}) =>{
 
   return (
     <div className="bg-white">
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={300} minWidth={0} minHeight={0}>
             <AreaChart data={data}>
                 <defs>
                     <linearGradient id="incomeGradient" x1="0" y1="0" x2="0" y2="1">

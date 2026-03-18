@@ -1,34 +1,52 @@
 services:
-    mongo:
-      image: mongo:latest 
-      container_name: mongodb
-      ports:
-        - "27017:27017" 
-      volumes:
-        - mongo-data:/data/db
-    backend:
-      build:
-        context: ./backend 
-        dockerfile: Dockerfile
-      container_name: node_backend
-      ports:
-        - "8000:8000"
-      volumes:
-        - ./backend:/app 
-        - /app/node_modules 
-      command: npm run dev
-    frontend:
-      build:
-        context: ./frontend/expense-tracker
-        dockerfile: Dockerfile
-      container_name: react_frontend
-      ports:
-        - "5173:5173" 
-      volumes:
-        - ./frontend/expense-tracker:/app 
-        - /app/node_modules 
-      command: npm run dev
+  postgres:
+    image: postgres:latest
+    container_name: expense-postgres
+    environment:
+      POSTGRES_DB: expense_tracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: expense-redis
+    ports:
+      - "6379:6379"
+
+  backend-java:
+    build:
+      context: ./backend-java
+      dockerfile: Dockerfile
+    container_name: java-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/expense_tracker
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1234
+      CLIENT_URL: http://localhost:5173
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "5001:5001"
+
+  frontend:
+    build:
+      context: ./frontend/expense-tracker
+      dockerfile: Dockerfile
+    container_name: react_frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend-java
+    environment:
+      VITE_API_BASE_URL: http://localhost:5001
 
 volumes:
-  mongo-data:
+  pg-data:
     driver: local

@@ -8,6 +8,7 @@ import { API_PATHS } from "../../utils/apiPaths";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
 import SocialLogin from "../../components/SocialLogin";
+import { BASE_URL } from "../../utils/apiPaths";
 
 const Login =() =>{
   const [email, setEmail] =useState("");
@@ -91,6 +92,20 @@ const Login =() =>{
                  SignUp
               </Link>
             </p>
+            <div className="mt-6 space-y-2">
+              <a
+                className="btn-primary w-full text-center block"
+                href={`${BASE_URL}/oauth2/authorization/google`}
+              >
+                Continue with Google
+              </a>
+              <a
+                className="btn-primary w-full text-center block"
+                href={`${BASE_URL}/oauth2/authorization/github`}
+              >
+                Continue with GitHub
+              </a>
+            </div>
             <SocialLogin />
         </form>
       </div>

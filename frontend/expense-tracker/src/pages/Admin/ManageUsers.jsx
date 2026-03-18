@@ -22,9 +22,12 @@ const ManageUsers = () => {
         try {
             setLoading(true);
             const response = await axiosInstance.get(API_PATHS.ADMIN.GET_ALL_USERS);
-            setUsers(response.data);
+            const data = response.data;
+            const list = Array.isArray(data) ? data : Array.isArray(data?.items) ? data.items : [];
+            setUsers(list.map((u) => ({ ...u, _id: u?._id ?? u?.id })));
         } catch (error) {
-            toast.error("Failed to load users.");
+            toast.error(error?.response?.data?.message || `Failed to load users (${error?.response?.status || "network"})`);
+            console.error("Fetch users error:", error?.response?.status, error?.response?.data || error);
         } finally {
             setLoading(false);
         }
@@ -36,12 +39,10 @@ const ManageUsers = () => {
 
             setOpenDeleteAlert({ show: false, data: null });
             toast.success("User details deleted successfully");
-            fetchIncomeDetails();
+            fetchUsers();
         } catch (error) {
-            console.error(
-                "Error deleting user:",
-                error.response?.data?.message || error.message
-            );
+            toast.error(error?.response?.data?.message || `Failed to delete user (${error?.response?.status || "network"})`);
+            console.error("Error deleting user:", error?.response?.status, error?.response?.data || error);
         }
     };
 
@@ -118,6 +119,11 @@ const ManageUsers = () => {
                             ))}
                         </tbody>
                     </table>
+                    {!users.length && (
+                        <div className="p-4 text-sm text-gray-500">
+                            No users found (or request failed). Check browser Network for `GET /api/v1/admin/users`.
+                        </div>
+                    )}
                     <Modal
                         isOpen={openDeleteAlert.show}
                         onClose={() => setOpenDeleteAlert({ show: false, data: null })}

@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
+import OAuthCallback from "./pages/Auth/OAuthCallback";
 import Home from "./pages/Dashboard/Home";
 import Income from "./pages/Dashboard/Income";
 import Expense from "./pages/Dashboard/Expense";
@@ -18,6 +19,8 @@ import AdminRoute from "./components/auth/AdminRoute";
 import ManageUsers from "./pages/Admin/ManageUsers"; 
 import ManageContent from "./pages/Admin/ManageContent"; 
 import News from "./pages/Dashboard/News"; 
+import Budgets from "./pages/Dashboard/Budgets";
+import Notifications from "./pages/Dashboard/Notifications";
 
 
 const App =() =>{
@@ -29,11 +32,14 @@ const App =() =>{
           <Route path="/" element={<Root />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/signUp" element={<SignUp />}/>
+          <Route path="/oauth2/callback" element={<OAuthCallback />}/>
           <Route path="/dashboard" element={<Home />}/> 
           <Route path="/income" element={<Income />}/>
           <Route path="/expense" element={<Expense />}/>
           <Route path="/profile-edit" element={<Profile />}/>
           <Route path="/news" element={<News />}/>
+          <Route path="/budgets" element={<Budgets />}/>
+          <Route path="/notifications" element={<Notifications />}/>
           <Route path="/admin/users" element={
             <AdminRoute>
               <ManageUsers />

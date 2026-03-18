@@ -17,7 +17,7 @@ const CustomPieChart =({
     colors,
     showTextAnchor,
 }) =>{
-  return <ResponsiveContainer width="100%" height={380}>
+  return <ResponsiveContainer width="100%" height={380} minWidth={0} minHeight={0}>
     <PieChart>
         <Pie
         data={data}

@@ -16,6 +16,8 @@ const TransactionInfoCard =({
     type,
     hideDeleteBtn,
     onDelete,
+    generalCategory,
+    description,
 }) => {
 
     const getAmountStyles = () =>  type === "income" ? "bg-green-50 text-green-500" : "bg-red-50 text-red-500";
@@ -30,7 +32,9 @@ const TransactionInfoCard =({
     </div>
     <div className="flex-1 flex items-center justify-between">
         <div>
+            {generalCategory && <p className="text-xs text-gray-500">{generalCategory}</p>}
             <p className="text-sm text-gray-700 font-medium">{title}</p>
+            {description && <p className="text-xs text-gray-400">{description}</p>}
             <p className="">{date}</p>
         </div>
 

@@ -21,7 +21,9 @@ const CustomBarChart1 =({data}) =>{
         if (active && payload && payload.length) {
             return (
                 <div className="bg-white shadow-md rounded-lg p-2 border border-gray-300">
-                    <p className="text-xs font-semibold text-purple-[#ff8fab] mb-1"> {payload[0].payload.category} </p>
+                    <p className="text-xs font-semibold text-purple-[#ff8fab] mb-1">
+                        {payload[0]?.payload?.source || payload[0]?.payload?.category || "Income"}
+                    </p>
                     <p className="text-sm text-gray-600">
                         Amount: <span className="text-sm font-medium text-gray-900">${payload[0].payload.amount}</span>
                     </p>
@@ -33,7 +35,7 @@ const CustomBarChart1 =({data}) =>{
 
   return (
     <div className="bg-white mt-6">
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={300} minWidth={0} minHeight={0}>
             <BarChart data={data}>
                 <CartesianGrid stroke="none" />
 

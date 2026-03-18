@@ -28,14 +28,14 @@ const AuthLayout =({ children }) =>{
                 <AnimatedLineChart />
             </div>
 
-            <div className="loader absolute bottom-8 left-2/3 -translate-x-1/2 w-80 lg:w-[90%] shadow-lg shadow-[#ff8fab]/15"> {/* Увеличиваем w-80 lg:w-[90%] */}
-                <div class="wrapper">
-                    <div class="catContainer">
+            <div className="loader absolute bottom-8 left-2/3 -translate-x-1/2 w-80 lg:w-[90%] shadow-lg shadow-[#ff8fab]/15">
+                <div className="wrapper">
+                    <div className="catContainer">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 733 673"
-                            class="catbody"
+                            className="catbody"
                         >
                             <path
                                 fill="currentColor"
@@ -48,27 +48,27 @@ const AuthLayout =({ children }) =>{
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 158 564"
-                            class="tail"
+                            className="tail"
                         >
                             <path
                                 fill="currentColor"
                                 d="M5.97602 76.066C-11.1099 41.6747 12.9018 0 51.3036 0V0C71.5336 0 89.8636 12.2558 97.2565 31.0866C173.697 225.792 180.478 345.852 97.0691 536.666C89.7636 553.378 73.0672 564 54.8273 564V564C16.9427 564 -5.4224 521.149 13.0712 488.085C90.2225 350.15 87.9612 241.089 5.97602 76.066Z"
                             ></path>
                         </svg>
-                        <div class="text">
-                            <span class="bigzzz">Z</span>
-                            <span class="zzz">Z</span>
+                        <div className="text">
+                            <span className="bigzzz">Z</span>
+                            <span className="zzz">Z</span>
                         </div>
                     </div>
-                    <div class="wallContainer">
+                    <div className="wallContainer">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 500 126"
-                            class="wall"
+                            className="wall"
                         >
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="3"
                                 x2="450"
@@ -76,7 +76,7 @@ const AuthLayout =({ children }) =>{
                                 x1="50"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="85"
                                 x2="400"
@@ -84,16 +84,16 @@ const AuthLayout =({ children }) =>{
                                 x1="100"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="122"
                                 x2="375"
                                 y1="122"
                                 x1="125"
                             ></line>
-                            <line stroke-width="6" stroke="currentColor" y2="43" x2="500" y1="43"></line>
+                            <line strokeWidth="6" stroke="currentColor" y2="43" x2="500" y1="43"></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="1.99391"
                                 x2="115.5"
@@ -101,7 +101,7 @@ const AuthLayout =({ children }) =>{
                                 x1="115.5"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="2.00002"
                                 x2="189"
@@ -109,7 +109,7 @@ const AuthLayout =({ children }) =>{
                                 x1="189"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="2.00612"
                                 x2="262.5"
@@ -117,7 +117,7 @@ const AuthLayout =({ children }) =>{
                                 x1="262.5"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="2.01222"
                                 x2="336"
@@ -125,7 +125,7 @@ const AuthLayout =({ children }) =>{
                                 x1="336"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="2.01833"
                                 x2="409.5"
@@ -133,7 +133,7 @@ const AuthLayout =({ children }) =>{
                                 x1="409.5"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="43"
                                 x2="153"
@@ -141,7 +141,7 @@ const AuthLayout =({ children }) =>{
                                 x1="153"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="43"
                                 x2="228"
@@ -149,7 +149,7 @@ const AuthLayout =({ children }) =>{
                                 x1="228"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="43"
                                 x2="303"
@@ -157,7 +157,7 @@ const AuthLayout =({ children }) =>{
                                 x1="303"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="43"
                                 x2="378"
@@ -165,7 +165,7 @@ const AuthLayout =({ children }) =>{
                                 x1="378"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="84"
                                 x2="192"
@@ -173,7 +173,7 @@ const AuthLayout =({ children }) =>{
                                 x1="192"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="84"
                                 x2="267"
@@ -181,7 +181,7 @@ const AuthLayout =({ children }) =>{
                                 x1="267"
                             ></line>
                             <line
-                                stroke-width="6"
+                                strokeWidth="6"
                                 stroke="currentColor"
                                 y2="84"
                                 x2="342"

@@ -17,6 +17,9 @@ const Income =() =>{
 
   const [incomeData, setIncomeData] = useState([]);
   const [ loading, setLoading] =useState(false);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [filters, setFilters] = useState({ from: "", to: "", source: "" });
   const [openDeleteAlert, setOpenDeleteAlert] = useState({
     show: false,
     data: null,
@@ -24,19 +27,32 @@ const Income =() =>{
   const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false);
 
   //Get All Income Details
-   const fetchIncomeDetails = async () => {
+   const fetchIncomeDetails = async (nextPage = page) => {
     if (loading) return;
 
     try {
-      const response = await axiosInstance.get(
-        `${API_PATHS.INCOME.GET_ALL_INCOME}`
-      );
+      setLoading(true);
+      const params = {
+        page: nextPage,
+        size: 10,
+        from: filters.from || undefined,
+        to: filters.to || undefined,
+        source: filters.source || undefined,
+      };
+      const response = await axiosInstance.get(API_PATHS.INCOME.GET_ALL_INCOME, { params });
+      const data = response.data;
 
-      if (response.data) {
-        setIncomeData(response.data);
-      }
+      // Поддержка двух форматов:
+      // 1) новый: { items, page, totalPages, ... }
+      // 2) старый: [ ...items ]
+      const items = Array.isArray(data) ? data : Array.isArray(data?.items) ? data.items : [];
+      const normalized = items.map((x) => ({ ...x, _id: x?._id ?? x?.id }));
+      setIncomeData(normalized);
+      setPage(typeof data?.page === "number" ? data.page : 0);
+      setTotalPages(typeof data?.totalPages === "number" ? data.totalPages : 1);
     } catch (error) {
       console.log("Something went wrong. Please try again", error);
+      toast.error(error?.response?.data?.message || `Failed to load income (${error?.response?.status || "network"})`);
     } finally {
       setLoading(false);
     }
@@ -71,7 +87,7 @@ const Income =() =>{
 
       setOpenAddIncomeModal(false);
       toast.success("Income added successfully");
-      fetchIncomeDetails();
+      fetchIncomeDetails(0);
     } catch (error) {
       console.error(
         "Error adding income:",
@@ -87,7 +103,7 @@ const Income =() =>{
 
       setOpenDeleteAlert({ show: false, data: null });
       toast.success("Income details deleted successfully");
-      fetchIncomeDetails();
+      fetchIncomeDetails(0);
     } catch (error) {
       console.error(
         "Error deleting income:",
@@ -122,13 +138,33 @@ const Income =() =>{
 
 
    useEffect(() => {
-    fetchIncomeDetails();
+    fetchIncomeDetails(0);
     return () => {};
    },[]);
 
   return (
     <DashboardLayout activeMenu= "Income">
       <div className="my-5 mx-auto">
+        <div className="card mb-4">
+          <div className="flex flex-wrap items-end gap-3">
+            <div>
+              <label className="text-xs text-gray-500">From</label>
+              <input className="input" type="date" value={filters.from} onChange={(e) => setFilters((p) => ({ ...p, from: e.target.value }))} />
+            </div>
+            <div>
+              <label className="text-xs text-gray-500">To</label>
+              <input className="input" type="date" value={filters.to} onChange={(e) => setFilters((p) => ({ ...p, to: e.target.value }))} />
+            </div>
+            <div className="flex-1 min-w-[220px]">
+              <label className="text-xs text-gray-500">Source contains</label>
+              <input className="input w-full" type="text" value={filters.source} onChange={(e) => setFilters((p) => ({ ...p, source: e.target.value }))} placeholder="Salary, Freelance..." />
+            </div>
+            <button type="button" className="add-btn add-btn-fill" onClick={() => fetchIncomeDetails(0)}>
+              Apply
+            </button>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 gap-6">
           <div className="">
             <IncomeOverview
@@ -145,6 +181,28 @@ const Income =() =>{
              }}
              onDownload={handleDownloadIncomeDetails}
           />
+        </div>
+
+        <div className="flex items-center justify-between mt-4">
+          <button
+            type="button"
+            className="add-btn"
+            disabled={page <= 0}
+            onClick={() => fetchIncomeDetails(page - 1)}
+          >
+            Prev
+          </button>
+          <div className="text-xs text-gray-500">
+            Page {page + 1} of {Math.max(totalPages, 1)}
+          </div>
+          <button
+            type="button"
+            className="add-btn"
+            disabled={page + 1 >= totalPages}
+            onClick={() => fetchIncomeDetails(page + 1)}
+          >
+            Next
+          </button>
         </div>
 
        <Modal

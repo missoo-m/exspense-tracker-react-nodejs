@@ -9,6 +9,7 @@ import { API_PATHS } from "../../utils/apiPaths";
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import uploadImage from "../../utils/uploadImage";
+import { BASE_URL } from "../../utils/apiPaths";
 
 
 
@@ -134,6 +135,21 @@ const SignUp =() =>{
                  Login
               </Link>
             </p>
+
+            <div className="mt-6 space-y-2">
+              <a
+                className="btn-primary w-full text-center block"
+                href={`${BASE_URL}/oauth2/authorization/google`}
+              >
+                Sign up with Google
+              </a>
+              <a
+                className="btn-primary w-full text-center block"
+                href={`${BASE_URL}/oauth2/authorization/github`}
+              >
+                Sign up with GitHub
+              </a>
+            </div>
 
         </form>
       </div>

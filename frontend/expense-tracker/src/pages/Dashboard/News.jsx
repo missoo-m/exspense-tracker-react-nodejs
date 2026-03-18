@@ -16,18 +16,31 @@ const News = () => {
 
     const fetchContent = async () => {
         try {
-            const [newsRes, currencyRes] = await Promise.all([
+            const results = await Promise.allSettled([
                 axiosInstance.get(API_PATHS.PUBLIC.GET_NEWS),
                 axiosInstance.get(API_PATHS.PUBLIC.GET_CURRENCIES),
             ]);
-            
-            setNews(newsRes.data);
-            const processedCurrencyData = { 
-                ...currencyRes.data, 
-                date: currencyRes.data.date || new Date().toISOString()
-            };
-            
-            setCurrencyData(processedCurrencyData); 
+
+            const [newsResult, currencyResult] = results;
+
+            if (newsResult.status === "fulfilled") {
+                setNews(Array.isArray(newsResult.value.data) ? newsResult.value.data : []);
+            } else {
+                setNews([]);
+                console.error("Fetch News Error:", newsResult.reason);
+            }
+
+            if (currencyResult.status === "fulfilled") {
+                const raw = currencyResult.value.data || {};
+                const processedCurrencyData = {
+                    ...raw,
+                    date: raw.date || new Date().toISOString(),
+                };
+                setCurrencyData(processedCurrencyData);
+            } else {
+                setCurrencyData(null);
+                console.error("Fetch Currencies Error:", currencyResult.reason);
+            }
             
         } catch (error) {
             if (error.response?.status === 404 && error.config.url.includes('currencies')) {
@@ -67,9 +80,9 @@ const News = () => {
                         </div>
                     ) : news.length > 0 ? (
                         
-                        news.map((item) => (
+                        news.map((item, index) => (
                             <div 
-                                key={item._id} 
+                                key={`${item._id}-${index}`}
                                 className="
                                     /* Уменьшен padding: p-6 -> p-4 */
                                     p-4 bg-white rounded-lg shadow-sm 

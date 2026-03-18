@@ -21,7 +21,6 @@ const ManageContent = () => {
         type: 'news',
         title: '',
         content: '',
-        currencyRates: { USD: '', EUR: '', RUB: '', YEN: "" },
     });
 
     const [openDeleteAlert, setOpenDeleteAlert] = useState({
@@ -71,7 +70,7 @@ const ManageContent = () => {
         }
 
         let dataToSend = formData;
-        let updatePath = API_PATHS.ADMIN.UPDATE_CONTENT(editingItem._id);
+        let updatePath = API_PATHS.ADMIN.UPDATE_CONTENT(editingItem?._id ?? editingItem?.id);
 
         if (formData.type === 'currency') {
             toast.error("Currency rates should be updated via the dedicated form (Add New Content).");
@@ -105,76 +104,32 @@ const ManageContent = () => {
         }
     };
 
-    const handleCurrencyRateChange = (code, value) => {
-        const cleanedValue = value.replace(/[^0-9.]/g, '');
-
-        setNewContent((prev) => ({
-            ...prev,
-            currencyRates: {
-                ...prev.currencyRates,
-                [code]: cleanedValue,
-            },
-        }));
-    };
-
     const handleAddContent = async (e) => {
         e.preventDefault();
         if (newContent.type === 'news' && (!newContent.title || !newContent.content)) {
             toast.error("Title and content are required for news.");
             return;
         }
-        if (newContent.type === 'currency') {
-            const hasRates = Object.values(newContent.currencyRates).some(rate => rate !== '');
-            if (!hasRates) {
-                toast.error("At least one currency rate is required.");
-                return;
-            }
-        }
 
         try {
-            if (newContent.type === 'currency') {
-                const ratesObject = Object.entries(newContent.currencyRates)
-                    .filter(([code, rate]) => rate !== '')
-                    .reduce((acc, [code, rate]) => {
+            const dataToSend = {
+                type: 'news',
+                title: newContent.title,
+                content: newContent.content,
+            };
 
-                        acc[code] = parseFloat(rate);
-                        return acc;
-                    }, {});
-
-                const dataToSend = {
-                    rates: ratesObject
-                };
-
-                await axiosInstance.put(API_PATHS.ADMIN.UPDATE_CURRENCIES, dataToSend);
-                toast.success("Currency rates updated successfully!");
-
-            } else {
-                const dataToSend = {
-                    type: 'news',
-                    title: newContent.title,
-                    content: newContent.content,
-                };
-
-                await axiosInstance.post(API_PATHS.ADMIN.ADD_CONTENT, dataToSend);
-                toast.success("News content added!");
-            }
+            await axiosInstance.post(API_PATHS.ADMIN.ADD_CONTENT, dataToSend);
+            toast.success("News content added!");
 
             setNewContent({
                 type: 'news',
                 title: '',
                 content: '',
-                currencyRates: { USD: '', EUR: '', RUB: '', YEN: "" },
             });
             fetchContent();
 
         } catch (error) {
-            let errorMessage = "Failed to add content.";
-            if (newContent.type === 'currency' && error instanceof SyntaxError) {
-                errorMessage = "Invalid input format for currency rates.";
-            } else {
-                errorMessage = error.response?.data?.message || errorMessage;
-            }
-            toast.error(errorMessage);
+            toast.error(error.response?.data?.message || "Failed to add content.");
         }
     };
 
@@ -183,15 +138,6 @@ const ManageContent = () => {
     }, []);
 
     const formatContentPreview = (item) => {
-        if (item.type === 'currency') {
-            try {
-                const parsedContent = JSON.parse(item.content);
-                const keys = Object.keys(parsedContent);
-                return `Currency: ${keys.slice(0, 3).join(', ')}... (${keys.length} total)`;
-            } catch (e) {
-                return 'Incorrect input (please update the currency)';
-            }
-        }
         return item.content.substring(0, 150) + (item.content.length > 150 ? '...' : '');
     };
 
@@ -229,7 +175,6 @@ const ManageContent = () => {
                                     "
                                 >
                                     <option value="news">News</option>
-                                    <option value="currency">Currency</option>
                                 </select>
                             </div>
                         </div>
@@ -268,63 +213,22 @@ const ManageContent = () => {
                     </div>
 
                     <div className="mb-4">
-                        {newContent.type === 'currency' ? (
-                            <div>
-                                <h4 className="text-lg font-bold text-slate-700 mb-4">Set currency</h4>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {Object.entries(newContent.currencyRates).map(([code, rate]) => (
-                                        <div key={code}>
-                                            <label className="text-sm font-medium text-slate-600 mb-1 block">{code}</label>
-
-                                            <div
-                                                className="
-    w-full p-0 flex items-center 
-    rounded-full shadow-inner bg-white border border-gray-200
-    transition-all duration-300 
-    focus-within:ring-4 focus-within:ring-[#ffe5ec] focus-within:border-[#ffb3c6]
-"
-                                            >
-                                                <span className="text-white font-bold text-sm bg-[#ff8fab] rounded-full px-4 py-2">
-                                                    {code}
-                                                </span>
-
-                                                <input
-                                                    type="text"
-                                                    placeholder="0.00"
-                                                    value={rate}
-                                                    onChange={(e) => handleCurrencyRateChange(code, e.target.value)}
-                                                    className="
-                            w-full bg-transparent outline-none 
-                            py-2 px-3 text-base 
-                        "
-                                                />
-                                            </div>
-
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ) : (
-                            <>
-                                <label className="text-sm font-medium text-slate-600 mb-1 block">
-                                    News content
-                                </label>
-                                <textarea
-                                    name="content"
-                                    value={newContent.content}
-                                    onChange={handleInputChange}
-                                    rows={6}
-                                    placeholder='Describe the news in detail. Use paragraphs for better readability.'
-                                    className="
+                        <label className="text-sm font-medium text-slate-600 mb-1 block">
+                            News content
+                        </label>
+                        <textarea
+                            name="content"
+                            value={newContent.content}
+                            onChange={handleInputChange}
+                            rows={6}
+                            placeholder='Describe the news in detail. Use paragraphs for better readability.'
+                            className="
     w-full resize-y p-4 text-base 
     rounded-xl shadow-inner bg-white border border-gray-200
     focus:ring-4 focus:ring-[#ffe5ec] focus:border-[#ffb3c6]
     transition-all duration-300 h-48
 "
-
-                                />
-                            </>
-                        )}
+                        />
                     </div>
 
 
@@ -342,7 +246,7 @@ const ManageContent = () => {
     "
                     >
                         <LuPlus size={18} />
-                        {newContent.type === 'currency' ? 'UPDATE THE CURRENCY RATE' : 'ADD NEWS'}
+                        ADD NEWS
                     </button>
                 </form>
             </div>
@@ -355,7 +259,7 @@ const ManageContent = () => {
                 <div className="space-y-4">
                     {contentList.map((item) => (
                         <div
-                            key={item._id}
+                            key={item?._id ?? item?.id}
                             className="
                                 p-5 bg-white rounded-xl shadow-lg 
                                 flex justify-between items-start 
@@ -402,7 +306,7 @@ const ManageContent = () => {
                                 )}
 
                                 <button
-                                    onClick={() => setOpenDeleteAlert({ show: true, data: item._id })}
+                                    onClick={() => setOpenDeleteAlert({ show: true, data: item?._id ?? item?.id })}
                                     className="
                                         p-2 rounded-full text-gray-400 bg-white-50 
                                         hover:bg-white hover:text-red-600 

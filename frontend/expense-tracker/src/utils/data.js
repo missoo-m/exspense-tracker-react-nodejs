@@ -5,6 +5,8 @@ import {
     LuLogOut,
     LuUsers,        
     LuGlobe,        
+    LuBell,
+    LuPiggyBank,
 } from "react-icons/lu";
 import { HiOutlineUser } from "react-icons/hi"; 
 
@@ -34,6 +36,18 @@ export const SIDE_MENU_DATA = [
     icon: LuGlobe,
     path: "/news",
     role: "NORMAL", 
+  },
+  {
+    id: "04b",
+    label: "Budgets",
+    icon: LuPiggyBank,
+    path: "/budgets",
+  },
+  {
+    id: "04c",
+    label: "Notifications",
+    icon: LuBell,
+    path: "/notifications",
   },
 
   {
