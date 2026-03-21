@@ -130,3 +130,87 @@
     50% { color: #e11d48; }
     100% { color: transparent; }
 }
+
+/* Custom DatePicker */
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.custom-date-input {
+    width: 100%;
+    height: 52px;
+    font-size: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 143, 171, 0.35);
+    background: rgba(255, 255, 255, 0.7);
+    padding: 0 14px;
+    color: #7f1d3f;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+}
+
+.custom-date-input:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(225, 29, 72, 0.10);
+}
+
+.custom-date-input:focus {
+    outline: none;
+    border-color: #ff8fab;
+    box-shadow: 0 0 0 4px rgba(255, 143, 171, 0.22);
+}
+
+select.custom-date-input {
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, #ff8fab 50%),
+                      linear-gradient(135deg, #ff8fab 50%, transparent 50%);
+    background-position: calc(100% - 18px) calc(50% - 2px), calc(100% - 12px) calc(50% - 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 34px;
+}
+
+.glass-datepicker-popper {
+    z-index: 9999 !important;
+}
+
+.glass-datepicker {
+    border: 1px solid rgba(255, 143, 171, 0.30) !important;
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 16px 30px rgba(225, 29, 72, 0.14);
+    overflow: hidden;
+    animation: dateFadeIn 0.22s ease-out;
+}
+
+.react-datepicker__header {
+    background: rgba(255, 229, 236, 0.72) !important;
+    border-bottom: 1px solid rgba(255, 143, 171, 0.22) !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+    background: #ff8fab !important;
+    border-radius: 9999px !important;
+    box-shadow: 0 0 12px rgba(255, 143, 171, 0.55);
+    color: #fff !important;
+    animation: selectedDatePop 0.2s ease-out;
+}
+
+.react-datepicker__day:hover {
+    border-radius: 9999px !important;
+    background: #ffe5ec !important;
+}
+
+@keyframes dateFadeIn {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes selectedDatePop {
+    from { transform: scale(0.92); opacity: 0.7; }
+    to { transform: scale(1); opacity: 1; }
+}

@@ -7,6 +7,7 @@ import {
     LuGlobe,        
     LuBell,
     LuPiggyBank,
+    LuBadgeDollarSign,
 } from "react-icons/lu";
 import { HiOutlineUser } from "react-icons/hi"; 
 
@@ -48,6 +49,12 @@ export const SIDE_MENU_DATA = [
     label: "Notifications",
     icon: LuBell,
     path: "/notifications",
+  },
+  {
+    id: "04d",
+    label: "Subscriptions",
+    icon: LuBadgeDollarSign,
+    path: "/subscriptions",
   },
 
   {

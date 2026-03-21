@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import IncomeList from "../../components/Income/IncomeList";
 import DeleteAlert from "../../components/DeleteAlert";
 import { useUserAuth } from "../../hooks/useUserAuth";
+import GlassDatePicker from "../../components/Inputs/GlassDatePicker";
 
 const Income =() =>{
   useUserAuth();
@@ -148,18 +149,34 @@ const Income =() =>{
         <div className="card mb-4">
           <div className="flex flex-wrap items-end gap-3">
             <div>
-              <label className="text-xs text-gray-500">From</label>
-              <input className="input" type="date" value={filters.from} onChange={(e) => setFilters((p) => ({ ...p, from: e.target.value }))} />
+              <GlassDatePicker
+                label="From"
+                value={filters.from}
+                onChange={(v) => setFilters((p) => ({ ...p, from: v }))}
+              />
             </div>
             <div>
-              <label className="text-xs text-gray-500">To</label>
-              <input className="input" type="date" value={filters.to} onChange={(e) => setFilters((p) => ({ ...p, to: e.target.value }))} />
+              <GlassDatePicker
+                label="To"
+                value={filters.to}
+                onChange={(v) => setFilters((p) => ({ ...p, to: v }))}
+              />
             </div>
             <div className="flex-1 min-w-[220px]">
               <label className="text-xs text-gray-500">Source contains</label>
-              <input className="input w-full" type="text" value={filters.source} onChange={(e) => setFilters((p) => ({ ...p, source: e.target.value }))} placeholder="Salary, Freelance..." />
+              <input
+                className="custom-date-input"
+                type="text"
+                value={filters.source}
+                onChange={(e) => setFilters((p) => ({ ...p, source: e.target.value }))}
+                placeholder="Salary, Freelance..."
+              />
             </div>
-            <button type="button" className="add-btn add-btn-fill" onClick={() => fetchIncomeDetails(0)}>
+            <button
+              type="button"
+              className="add-btn add-btn-fill h-[52px] px-6 text-base"
+              onClick={() => fetchIncomeDetails(0)}
+            >
               Apply
             </button>
           </div>

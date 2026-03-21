@@ -11,6 +11,7 @@ import Modal from "../../components/Modal";
 import ExpenseList from "../../components/Expense/ExpenseList";
 import DeleteAlert from "../../components/DeleteAlert";
 import CategoryManager from "../../components/Expense/CategoryManager";
+import GlassDatePicker from "../../components/Inputs/GlassDatePicker";
 
 const Expense = () => {
   useUserAuth();
@@ -156,17 +157,23 @@ const Expense = () => {
         <div className="card mb-4">
           <div className="flex flex-wrap items-end gap-3">
             <div>
-              <label className="text-xs text-gray-500">From</label>
-              <input className="input" type="date" value={filters.from} onChange={(e) => setFilters((p) => ({ ...p, from: e.target.value }))} />
+              <GlassDatePicker
+                label="From"
+                value={filters.from}
+                onChange={(v) => setFilters((p) => ({ ...p, from: v }))}
+              />
             </div>
             <div>
-              <label className="text-xs text-gray-500">To</label>
-              <input className="input" type="date" value={filters.to} onChange={(e) => setFilters((p) => ({ ...p, to: e.target.value }))} />
+              <GlassDatePicker
+                label="To"
+                value={filters.to}
+                onChange={(v) => setFilters((p) => ({ ...p, to: v }))}
+              />
             </div>
             <div className="flex-1 min-w-[220px]">
               <label className="text-xs text-gray-500">General category</label>
               <select
-                className="input w-full"
+                className="custom-date-input"
                 value={filters.generalCategory}
                 onChange={(e) => setFilters((p) => ({ ...p, generalCategory: e.target.value }))}
               >
@@ -178,7 +185,11 @@ const Expense = () => {
                 ))}
               </select>
             </div>
-            <button type="button" className="add-btn add-btn-fill" onClick={() => fetchExpenseDetails(0)}>
+            <button
+              type="button"
+              className="add-btn add-btn-fill h-[52px] px-6 text-base"
+              onClick={() => fetchExpenseDetails(0)}
+            >
               Apply
             </button>
           </div>

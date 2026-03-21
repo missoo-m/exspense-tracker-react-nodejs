@@ -19,6 +19,7 @@ import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithCh
 import RecentIncome from "../../components/Dashboard/RecentIncome";
 import ExpensesByCategoryChart from "../../components/Dashboard/ExpensesByCategoryChart";
 import FloatingSphere3D from "../../components/Dashboard/FloatingSphere3D";
+import SmartCalendar from "../../components/Dashboard/SmartCalendar";
 
 const Home =() =>{
   useUserAuth();
@@ -118,6 +119,7 @@ const Home =() =>{
             <ExpensesByCategoryChart
               data={dashboardData?.expensesByCategory || []}
             />
+            <SmartCalendar />
           </div>
       </div>
     </DashboardLayout>

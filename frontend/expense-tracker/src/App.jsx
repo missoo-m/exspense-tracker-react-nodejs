@@ -21,6 +21,7 @@ import ManageContent from "./pages/Admin/ManageContent";
 import News from "./pages/Dashboard/News"; 
 import Budgets from "./pages/Dashboard/Budgets";
 import Notifications from "./pages/Dashboard/Notifications";
+import Subscriptions from "./pages/Dashboard/Subscriptions";
 
 
 const App =() =>{
@@ -40,6 +41,7 @@ const App =() =>{
           <Route path="/news" element={<News />}/>
           <Route path="/budgets" element={<Budgets />}/>
           <Route path="/notifications" element={<Notifications />}/>
+          <Route path="/subscriptions" element={<Subscriptions />}/>
           <Route path="/admin/users" element={
             <AdminRoute>
               <ManageUsers />

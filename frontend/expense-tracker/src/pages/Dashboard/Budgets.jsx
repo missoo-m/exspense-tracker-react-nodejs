@@ -4,6 +4,7 @@ import { useUserAuth } from "../../hooks/useUserAuth";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
+import GlassDatePicker from "../../components/Inputs/GlassDatePicker";
 
 function currentMonth() {
   const d = new Date();
@@ -83,18 +84,17 @@ const Budgets = () => {
   return (
     <DashboardLayout activeMenu="Budgets">
       <div className="my-5 mx-auto">
-        <div className="card mb-4">
+        <div className="card mb-4 border-[#ffdde8]">
           <div className="flex items-center justify-between gap-4">
-            <h5 className="text-lg">Monthly Budgets</h5>
+            <h5 className="text-lg text-[#7f1d3f]">Monthly Budgets</h5>
             <div className="flex items-center gap-2">
-              <label className="text-xs text-gray-500">Month</label>
-              <input
-                className="input"
-                type="month"
+              <GlassDatePicker
+                label="Month"
                 value={month}
-                onChange={(e) => setMonth(e.target.value)}
+                onChange={setMonth}
+                picker="month"
               />
-            </div>
+             </div>
           </div>
           <p className="text-xs text-gray-500 mt-2">
             Set budget per general expense category for the selected month.
@@ -112,17 +112,17 @@ const Budgets = () => {
                 return (
                   <div
                     key={c._id}
-                    className="flex items-center justify-between gap-3 border-b border-gray-100 pb-3"
+                    className="flex items-center justify-between gap-3 border-b border-[#ffe5ec] pb-3"
                   >
                     <div>
-                      <div className="text-sm font-medium text-gray-800">
+                      <div className="text-sm font-medium text-[#7f1d3f]">
                         {c.name} {c.default ? <span className="text-xs text-gray-400">(default)</span> : null}
                       </div>
                       <div className="text-xs text-gray-500">Budget amount</div>
                     </div>
                     <div className="flex items-center gap-2">
                       <input
-                        className="input w-32"
+                        className="custom-date-input w-32"
                         type="number"
                         min="0"
                         step="0.01"
