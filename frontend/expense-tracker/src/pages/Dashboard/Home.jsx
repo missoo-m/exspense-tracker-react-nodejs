@@ -18,6 +18,7 @@ import Last30DaysExpenses from "../../components/Dashboard/Last30DaysExpenses";
 import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithChart";
 import RecentIncome from "../../components/Dashboard/RecentIncome";
 import ExpensesByCategoryChart from "../../components/Dashboard/ExpensesByCategoryChart";
+import FloatingSphere3D from "../../components/Dashboard/FloatingSphere3D";
 
 const Home =() =>{
   useUserAuth();
@@ -80,6 +81,9 @@ const Home =() =>{
             </div> 
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div className="md:col-span-2">
+              <FloatingSphere3D />
+            </div>
             <RecentTransactions
                transactions={dashboardData?.recentTransactions}
                onSeeMore ={() => navigate("/expense")}
