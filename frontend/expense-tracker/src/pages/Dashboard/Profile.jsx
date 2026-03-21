@@ -38,21 +38,17 @@ const Profile = () => {
     setLoading(true);
 
     try {
-      let res;
-
+      const formData = new FormData();
+      formData.append("fullName", fullName);
       if (profilePic) {
-        const formData = new FormData();
         formData.append("profileImage", profilePic);
-        formData.append("fullName", fullName);
-
-        res = await axiosInstance.put(API_PATHS.AUTH.UPDATE, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-      } else {
-        res = await axiosInstance.put(API_PATHS.AUTH.UPDATE, { fullName });
       }
+
+      const res = await axiosInstance.put(API_PATHS.AUTH.UPDATE, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       updateUser(res.data.user);
       toast.success("Profile updated successfully");

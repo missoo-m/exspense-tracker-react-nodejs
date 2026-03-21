@@ -2,10 +2,17 @@ package com.example.expensetracker.controller;
 
 import com.example.expensetracker.model.News;
 import com.example.expensetracker.model.User;
+import com.example.expensetracker.repository.BudgetRepository;
+import com.example.expensetracker.repository.CategoryRepository;
+import com.example.expensetracker.repository.ExpenseRepository;
+import com.example.expensetracker.repository.IncomeRepository;
 import com.example.expensetracker.repository.NewsRepository;
+import com.example.expensetracker.repository.NotificationRepository;
 import com.example.expensetracker.repository.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -18,11 +25,26 @@ public class AdminController {
 
     private final UserRepository userRepository;
     private final NewsRepository newsRepository;
+    private final CategoryRepository categoryRepository;
+    private final ExpenseRepository expenseRepository;
+    private final IncomeRepository incomeRepository;
+    private final BudgetRepository budgetRepository;
+    private final NotificationRepository notificationRepository;
 
     public AdminController(UserRepository userRepository,
-                           NewsRepository newsRepository) {
+                           NewsRepository newsRepository,
+                           CategoryRepository categoryRepository,
+                           ExpenseRepository expenseRepository,
+                           IncomeRepository incomeRepository,
+                           BudgetRepository budgetRepository,
+                           NotificationRepository notificationRepository) {
         this.userRepository = userRepository;
         this.newsRepository = newsRepository;
+        this.categoryRepository = categoryRepository;
+        this.expenseRepository = expenseRepository;
+        this.incomeRepository = incomeRepository;
+        this.budgetRepository = budgetRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     private boolean isAdmin(User user) {
@@ -42,6 +64,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/users/{id}")
+    @Transactional
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User user,
                                         @PathVariable("id") Long id) {
         if (!isAdmin(user)) {
@@ -49,8 +72,22 @@ public class AdminController {
         }
         return userRepository.findById(id)
                 .map(u -> {
-                    userRepository.delete(u);
-                    return ResponseEntity.ok(Map.of("message", "User deleted successfully"));
+                    try {
+                        // Delete dependent records first to satisfy FK constraints.
+                        notificationRepository.deleteByUser(u);
+                        budgetRepository.deleteByUser(u);
+                        expenseRepository.deleteByUser(u);
+                        incomeRepository.deleteByUser(u);
+                        categoryRepository.deleteByUser(u);
+                        newsRepository.deleteByAuthor(u);
+                        userRepository.delete(u);
+                        return ResponseEntity.ok(Map.of("message", "User deleted successfully"));
+                    } catch (DataIntegrityViolationException ex) {
+                        return ResponseEntity.status(409).body(Map.of(
+                                "message", "Cannot delete user because related records still exist",
+                                "error", ex.getMostSpecificCause() != null ? ex.getMostSpecificCause().getMessage() : ex.getMessage()
+                        ));
+                    }
                 })
                 .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "User not found")));
     }

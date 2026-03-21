@@ -36,5 +36,7 @@ public interface IncomeRepository extends JpaRepository<Income, Long> {
             @Param("source") String source,
             Pageable pageable
     );
+
+    void deleteByUser(User user);
 }
 

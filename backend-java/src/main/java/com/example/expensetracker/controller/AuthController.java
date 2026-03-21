@@ -130,15 +130,11 @@ public class AuthController {
                 return ResponseEntity.status(500).body(Map.of("message", "File upload error"));
             }
         }
-        userService.save(user);
+        User saved = userService.save(user);
 
         return ResponseEntity.ok(Map.of(
                 "message", "Profile updated successfully",
-                "user", Map.of(
-                        "fullName", user.getFullName(),
-                        "email", user.getEmail(),
-                        "profileImageUrl", user.getProfileImageUrl()
-                )
+                "user", saved
         ));
     }
 

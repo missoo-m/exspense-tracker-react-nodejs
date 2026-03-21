@@ -1,0 +1,4 @@
+com/example/expensetracker/AuthIntegrationTest.class
+com/example/expensetracker/testutil/TestAuth.class
+com/example/expensetracker/BudgetAndNotificationIntegrationTest.class
+com/example/expensetracker/CategoryIntegrationTest.class

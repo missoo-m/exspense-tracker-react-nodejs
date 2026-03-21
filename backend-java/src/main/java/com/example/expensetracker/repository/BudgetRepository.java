@@ -11,5 +11,6 @@ public interface BudgetRepository extends JpaRepository<Budget, Long> {
     List<Budget> findByUserAndMonthOrderByGeneralCategoryAsc(User user, String month);
     Optional<Budget> findByUserAndMonthAndGeneralCategory(User user, String month, String generalCategory);
     Optional<Budget> findByIdAndUser(Long id, User user);
+    void deleteByUser(User user);
 }
 

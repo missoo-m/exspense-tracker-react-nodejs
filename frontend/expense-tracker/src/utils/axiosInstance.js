@@ -34,10 +34,7 @@ axiosInstance.interceptors.response.use(
         //Handle common errors globally
         if(error.response) {
             if( error.response.status === 401) {
-                // Don't hard-crash the whole app on any 401.
-                // Let pages decide; if user session is really invalid, useUserAuth will navigate to /login.
-                // Still clear token to avoid repeated 401 loops.
-                localStorage.removeItem("token");
+                // Keep token; specific pages/hooks decide whether to redirect.
             } else if (error.response.status === 500) {
                 console.error( " Server error. Please try later. ");
             }

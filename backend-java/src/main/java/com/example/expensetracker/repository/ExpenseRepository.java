@@ -53,5 +53,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
             @Param("category") String category,
             Pageable pageable
     );
+
+    void deleteByUser(User user);
 }
 
