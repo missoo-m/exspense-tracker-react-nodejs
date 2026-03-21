@@ -14,22 +14,22 @@ const CategoryManager = ({ categories, onChange }) => {
 
   const handleCreate = async () => {
     if (!name.trim()) {
-      toast.error("Category name is required");
+      toast.error("Укажите название категории");
       return;
     }
     try {
       await axiosInstance.post(API_PATHS.CATEGORY.ADD, { name });
       onChange && onChange();
       setName("");
-      toast.success("Category created");
+      toast.success("Категория создана");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to create category");
+      toast.error(error.response?.data?.message || "Не удалось создать категорию");
     }
   };
 
   const handleUpdate = async (id) => {
     if (!editingName.trim()) {
-      toast.error("Category name is required");
+      toast.error("Укажите название категории");
       return;
     }
     try {
@@ -39,9 +39,9 @@ const CategoryManager = ({ categories, onChange }) => {
       onChange && onChange();
       setEditingId(null);
       setEditingName("");
-      toast.success("Category updated");
+      toast.success("Категория обновлена");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to update category");
+      toast.error(error.response?.data?.message || "Не удалось обновить категорию");
     }
   };
 
@@ -49,9 +49,9 @@ const CategoryManager = ({ categories, onChange }) => {
     try {
       await axiosInstance.delete(API_PATHS.CATEGORY.DELETE(id));
       onChange && onChange();
-      toast.success("Category deleted");
+      toast.success("Категория удалена");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to delete category");
+      toast.error(error.response?.data?.message || "Не удалось удалить категорию");
     }
   };
 
@@ -63,26 +63,26 @@ const CategoryManager = ({ categories, onChange }) => {
 
   return (
     <div className="card mb-4">
-      <h5 className="text-lg mb-3">Expense Categories</h5>
+      <h5 className="text-lg mb-3">Категории расходов</h5>
 
       {/* Добавление новой категории */}
       <div className="flex gap-2 mb-6">
         <input
           type="text"
           className="input flex-1"
-          placeholder="New category name"
+          placeholder="Название новой категории"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <button type="button" className="add-btn add-btn-fill" onClick={handleCreate}>
-          Add
+          Добавить
         </button>
       </div>
 
       {/* Стандартные категории */}
       {defaultCategories.length > 0 && (
         <div className="mb-4">
-          <h6 className="text-sm font-medium text-gray-500 mb-2">Default Categories</h6>
+          <h6 className="text-sm font-medium text-gray-500 mb-2">Категории по умолчанию</h6>
           <div className="flex flex-wrap gap-2">
             {defaultCategories.map((cat) => (
               <span
@@ -99,7 +99,7 @@ const CategoryManager = ({ categories, onChange }) => {
       {/* Пользовательские категории */}
       {userCategories.length > 0 && (
         <div>
-          <h6 className="text-sm font-medium text-gray-500 mb-2">Your Categories</h6>
+          <h6 className="text-sm font-medium text-gray-500 mb-2">Ваши категории</h6>
           <ul className="space-y-2">
             {userCategories.map((cat) => (
               <li key={cat._id} className="flex items-center justify-between text-sm">
@@ -116,14 +116,14 @@ const CategoryManager = ({ categories, onChange }) => {
                       className="text-xs text-green-600 mr-2"
                       onClick={() => handleUpdate(cat._id)}
                     >
-                      Save
+                      Сохранить
                     </button>
                     <button
                       type="button"
                       className="text-xs text-gray-500"
                       onClick={() => setEditingId(null)}
                     >
-                      Cancel
+                      Отмена
                     </button>
                   </>
                 ) : (
@@ -138,14 +138,14 @@ const CategoryManager = ({ categories, onChange }) => {
                           setEditingName(cat.name);
                         }}
                       >
-                        Rename
+                        Переименовать 
                       </button>
                       <button
                         type="button"
                         className="text-xs text-red-600"
                         onClick={() => handleDelete(cat._id)}
                       >
-                        Delete
+                        Удалить
                       </button>
                     </div>
                   </>
@@ -157,7 +157,7 @@ const CategoryManager = ({ categories, onChange }) => {
       )}
 
       {categories.length === 0 && (
-        <p className="text-xs text-gray-500">No categories yet. Add your first category!</p>
+        <p className="text-xs text-gray-500">Категории пока отсутствуют. Добавьте свою первую категорию!</p>
       )}
     </div>
   );

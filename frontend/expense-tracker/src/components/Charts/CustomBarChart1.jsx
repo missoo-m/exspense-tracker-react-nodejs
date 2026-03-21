@@ -25,7 +25,7 @@ const CustomBarChart1 =({data}) =>{
                         {payload[0]?.payload?.source || payload[0]?.payload?.category || "Income"}
                     </p>
                     <p className="text-sm text-gray-600">
-                        Amount: <span className="text-sm font-medium text-gray-900">${payload[0].payload.amount}</span>
+                        Сумма: <span className="text-sm font-medium text-gray-900">${payload[0].payload.amount}</span>
                     </p>
                 </div>
             );

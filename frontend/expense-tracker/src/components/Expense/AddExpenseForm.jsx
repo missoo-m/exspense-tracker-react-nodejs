@@ -23,7 +23,7 @@ const AddExpenseForm = ({ onAddExpense, categories = [] }) => {
     const selectedCategory = categories.find((c) => String(c._id) === String(expense.categoryId));
     
     if (!selectedCategory) {
-      toast.error("Please select a category");
+      toast.error("Пожалуйста, выберите категорию");
       return;
     }
 
@@ -46,7 +46,7 @@ const AddExpenseForm = ({ onAddExpense, categories = [] }) => {
       {/* Только выпадающий список категорий */}
       <div className="mb-4">
         <label className="block text-xs font-medium mb-1">
-          Category <span className="text-red-500">*</span>
+          Категория <span className="text-red-500">*</span>
         </label>
         <select
           className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -54,7 +54,7 @@ const AddExpenseForm = ({ onAddExpense, categories = [] }) => {
           onChange={(e) => handleChange("categoryId", e.target.value)}
           required
         >
-          <option value="">-- Select a category --</option>
+          <option value="">Выберите категорию</option>
           {categories.map((cat) => (
             <option key={cat._id} value={cat._id}>
               {cat.name} {cat.default ? "(Default)" : ""}
@@ -62,7 +62,7 @@ const AddExpenseForm = ({ onAddExpense, categories = [] }) => {
           ))}
         </select>
         <p className="text-xs text-gray-400 mt-1">
-          You can add more categories in the category manager
+          Добавить дополнительные категории можно в менеджере категорий.
         </p>
       </div>
 
@@ -70,15 +70,15 @@ const AddExpenseForm = ({ onAddExpense, categories = [] }) => {
       <Input
         value={expense.description}
         onChange={({ target }) => handleChange("description", target.value)}
-        label="Description (what was it spent on?)"
-        placeholder="Groceries, taxi, cinema ticket..."
+        label="Описание (на что были потрачены деньги?)"
+        placeholder="Продукты, такси, билет в кино..."
         type="text"
       />
 
       <Input
         value={expense.amount}
         onChange={({ target }) => handleChange("amount", target.value)}
-        label="Amount"
+        label="Сумма"
         placeholder="0.00"
         type="number"
         min="0"
@@ -98,7 +98,7 @@ const AddExpenseForm = ({ onAddExpense, categories = [] }) => {
           className="add-btn add-btn-fill"
           onClick={handleSubmit}
         >
-          Add Expense
+          Добавить рассходы
         </button>
       </div>
     </div>

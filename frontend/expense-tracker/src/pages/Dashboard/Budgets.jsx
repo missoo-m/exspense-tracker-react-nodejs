@@ -37,7 +37,7 @@ const Budgets = () => {
       const res = await axiosInstance.get(API_PATHS.BUDGET.GET_BY_MONTH(month));
       setBudgets(Array.isArray(res.data) ? res.data : []);
     } catch (e) {
-      toast.error(e.response?.data?.message || "Failed to load budgets");
+      toast.error(e.response?.data?.message || "Не удалось загрузить бюджеты");
       setBudgets([]);
     } finally {
       setLoading(false);
@@ -47,7 +47,7 @@ const Budgets = () => {
   const upsertBudget = async (generalCategory, amount) => {
     const value = amount === "" ? "" : Number(amount);
     if (value !== "" && (Number.isNaN(value) || value < 0)) {
-      toast.error("Invalid amount");
+      toast.error("Неверная сумма");
       return;
     }
 
@@ -67,9 +67,9 @@ const Budgets = () => {
         }
         return [...prev, updated];
       });
-      toast.success("Budget saved");
+      toast.success("Бюджет сохранен");
     } catch (e) {
-      toast.error(e.response?.data?.message || "Failed to save budget");
+      toast.error(e.response?.data?.message || "Не удалось сохранить бюджет");
     }
   };
 
@@ -86,24 +86,24 @@ const Budgets = () => {
       <div className="my-5 mx-auto">
         <div className="card mb-4 border-[#ffdde8]">
           <div className="flex items-center justify-between gap-4">
-            <h5 className="text-lg text-[#7f1d3f]">Monthly Budgets</h5>
+            <h5 className="text-lg text-[#7f1d3f]">Ежемесячные бюджеты</h5>
             <div className="flex items-center gap-2">
               <GlassDatePicker
-                label="Month"
+                label="Месяц"
                 value={month}
                 onChange={setMonth}
                 picker="month"
               />
-             </div>
+            </div>
           </div>
           <p className="text-xs text-gray-500 mt-2">
-            Set budget per general expense category for the selected month.
+            Установите бюджет по каждой категории расходов на выбранный месяц.
           </p>
         </div>
 
         <div className="card">
           {loading ? (
-            <p className="text-sm text-gray-500">Loading...</p>
+            <p className="text-sm text-gray-500">Загрузка...</p>
           ) : (
             <div className="space-y-3">
               {categories.map((c) => {
@@ -116,9 +116,9 @@ const Budgets = () => {
                   >
                     <div>
                       <div className="text-sm font-medium text-[#7f1d3f]">
-                        {c.name} {c.default ? <span className="text-xs text-gray-400">(default)</span> : null}
+                        {c.name}
                       </div>
-                      <div className="text-xs text-gray-500">Budget amount</div>
+                      <div className="text-xs text-gray-500">Сумма бюджета</div>
                     </div>
                     <div className="flex items-center gap-2">
                       <input
@@ -134,7 +134,7 @@ const Budgets = () => {
                 );
               })}
               {categories.length === 0 && (
-                <p className="text-sm text-gray-500">No categories yet.</p>
+                <p className="text-sm text-gray-500">Категории пока не добавлены</p>
               )}
             </div>
           )}
@@ -145,4 +145,3 @@ const Budgets = () => {
 };
 
 export default Budgets;
-

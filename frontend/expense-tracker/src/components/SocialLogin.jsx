@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaTiktok, FaGithub, FaLinkedinIn, FaInstagram } from 'react-icons/fa'; 
+import { FaTiktok, FaGithub, FaLinkedinIn, FaInstagram, FaGoogle } from 'react-icons/fa'; 
+
 
 const SocialLogin = () => {
   const ulClasses = "flex justify-center items-center mt-6 mb-4"; 
@@ -22,7 +23,11 @@ const SocialLogin = () => {
   );
 
   return (
-    <ul className={ulClasses}>
+    <>
+      
+      {/* Иконки соцсетей в одну линию */}
+      <ul className={ulClasses}>
+       
       {/* LinkedIn */}
       <li className={iconBaseClasses + " group"}>
         <a href="https://linkedin.com/" aria-label="LinkedIn" className={linkBaseClasses}>
@@ -60,6 +65,9 @@ const SocialLogin = () => {
         <Tooltip bgColorClass="bg-black">TikTok</Tooltip>
       </li>
     </ul>
+    
+    </>
+
   );
 };
 

@@ -8,12 +8,12 @@ const currencyIcons = {
 };
 const formatUpdateDate = (dateString) => {
     if (!dateString) {
-        return 'Date unknown';
+        return 'Дата неизвестна';
     }
     const dateObj = new Date(dateString);
 
     if (isNaN(dateObj.getTime())) {
-        return 'The date is incorrect';
+        return 'Дата неверна';
     }
 
     return `${dateObj.toLocaleDateString()} в ${dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
@@ -24,7 +24,7 @@ const CurrencyDisplay = ({ currencyData, loading }) => {
     if (loading) {
         return (
             <div className="p-4 rounded-xl border border-[#ffe5ec] bg-white animate-pulse">
-                <p className="text-gray-500 text-center text-sm">Downloading courses...</p>
+                <p className="text-gray-500 text-center text-sm">Скачивание курсов...</p>
             </div>
         );
     }
@@ -32,7 +32,7 @@ const CurrencyDisplay = ({ currencyData, loading }) => {
     if (!currencyData || !currencyData.rates || Object.keys(currencyData.rates).length === 0) {
         return (
             <div className="p-4 rounded-xl border border-[#ffe5ec] bg-white">
-                <p className="text-gray-600 font-medium text-sm">There are no available exchange rates to display.</p>
+                <p className="text-gray-600 font-medium text-sm">Доступных обменных курсов для отображения нет.</p>
             </div>
         );
     }
@@ -41,7 +41,7 @@ const CurrencyDisplay = ({ currencyData, loading }) => {
     
     return (
         <div className="space-y-3">
-            <h3 className="text-xl font-bold text-[#7f1d3f] mb-4">Exchange rates</h3>
+            <h3 className="text-xl font-bold text-[#7f1d3f] mb-4">Курсы валют</h3>
             
             {Object.entries(rates).map(([code, rate]) => {
                 const IconComponent = currencyIcons[code] || LuDollarSign;

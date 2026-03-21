@@ -27,7 +27,7 @@ const News = () => {
                 setNews(Array.isArray(newsResult.value.data) ? newsResult.value.data : []);
             } else {
                 setNews([]);
-                console.error("Fetch News Error:", newsResult.reason);
+                console.error("Ошибка загрузки новостей:", newsResult.reason);
             }
 
             if (currencyResult.status === "fulfilled") {
@@ -39,14 +39,14 @@ const News = () => {
                 setCurrencyData(processedCurrencyData);
             } else {
                 setCurrencyData(null);
-                console.error("Fetch Currencies Error:", currencyResult.reason);
+                console.error("Ошибка загрузки курсов валют:", currencyResult.reason);
             }
             
         } catch (error) {
             if (error.response?.status === 404 && error.config.url.includes('currencies')) {
             } else {
-                toast.error("Failed to load content.");
-                console.error("Fetch Content Error:", error);
+                toast.error("Не удалось загрузить контент.");
+                console.error("Ошибка загрузки контента:", error);
             }
         } finally {
             setLoading(false);
@@ -58,8 +58,8 @@ const News = () => {
     }, []);
 
     return (
-        <DashboardLayout activeMenu="News & Currencies">
-            <h4 className="text-xl font-bold text-[#7f1d3f] mb-6">News & Currencies</h4>
+        <DashboardLayout activeMenu="Новости и курсы">
+            <h4 className="text-xl font-bold text-[#7f1d3f] mb-6">Новости и курсы валют</h4>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6"> 
             
@@ -72,11 +72,11 @@ const News = () => {
 
                 <div className="col-span-1 lg:col-span-2 space-y-4"> 
                     
-                    <h3 className="text-xl font-bold text-[#7f1d3f] mb-1">Latest News</h3>
+                    <h3 className="text-xl font-bold text-[#7f1d3f] mb-1">Последние новости</h3>
                     
                     {loading && news.length === 0 ? (
                         <div className="p-4 rounded-xl border border-[#ffe5ec] bg-white">
-                             <p className="text-center text-sm text-gray-500">Loading news...</p>
+                             <p className="text-center text-sm text-gray-500">Загрузка новостей...</p>
                         </div>
                     ) : news.length > 0 ? (
                         
@@ -87,14 +87,14 @@ const News = () => {
                             >
                                 <h4 className="text-lg font-bold text-gray-800">{item.title}</h4>
                                 <p className="text-xs font-medium text-gray-500 mb-2">
-                                    Published: {new Date(item.date || item.createdAt).toLocaleDateString()}
+                                    Опубликовано: {new Date(item.date || item.createdAt).toLocaleDateString()}
                                 </p>
                                 <p className="text-sm text-gray-700">{item.content}</p>
                             </div>
                         ))
                         
                     ) : (
-                        <p className="text-gray-600 p-4 bg-white rounded-xl border border-[#ffe5ec]">No news available.</p>
+                        <p className="text-gray-600 p-4 bg-white rounded-xl border border-[#ffe5ec]">Нет доступных новостей.</p>
                     )}
                 </div>
             </div>

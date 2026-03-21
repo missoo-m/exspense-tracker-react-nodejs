@@ -62,7 +62,7 @@ public class IncomeController {
     @GetMapping("/get")
     public ResponseEntity<?> getAll(@AuthenticationPrincipal User user,
                                     @RequestParam(value = "page", defaultValue = "0") int page,
-                                    @RequestParam(value = "size", defaultValue = "10") int size,
+                                    @RequestParam(value = "size", defaultValue = "5") int size,
                                     @RequestParam(value = "from", required = false) String from,
                                     @RequestParam(value = "to", required = false) String to,
                                     @RequestParam(value = "source", required = false) String source) {
@@ -91,7 +91,7 @@ public class IncomeController {
             return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
         }
         incomeRepository.deleteById(id);
-        return ResponseEntity.ok(Map.of("messege", " Income deleted successfully "));
+        return ResponseEntity.ok(Map.of("messege", " Доход успешно удален "));
     }
 
     @GetMapping("/downloadexcel")
@@ -102,12 +102,12 @@ public class IncomeController {
         List<Income> list = incomeRepository.findByUserOrderByDateDesc(user);
 
         Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Income");
+        Sheet sheet = workbook.createSheet("Доход");
         int rowIdx = 0;
         Row header = sheet.createRow(rowIdx++);
-        header.createCell(0).setCellValue("Source");
-        header.createCell(1).setCellValue("Amount");
-        header.createCell(2).setCellValue("Date");
+        header.createCell(0).setCellValue("Источник");
+        header.createCell(1).setCellValue("Сумма");
+        header.createCell(2).setCellValue("Дата");
 
         for (Income income : list) {
             Row row = sheet.createRow(rowIdx++);

@@ -1,4 +1,3 @@
-
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useUserAuth } from "../../hooks/useUserAuth";
 import { useState, useEffect } from "react";
@@ -46,16 +45,13 @@ const Expense = () => {
       const response = await axiosInstance.get(API_PATHS.EXPENSE.GET_ALL_EXPENSE, { params });
       const data = response.data;
 
-      // Поддержка двух форматов:
-      // 1) новый: { items, page, totalPages, ... }
-      // 2) старый: [ ...items ]
       const items = Array.isArray(data) ? data : Array.isArray(data?.items) ? data.items : [];
       const normalized = items.map((x) => ({ ...x, _id: x?._id ?? x?.id }));
       setExpenseData(normalized);
       setPage(typeof data?.page === "number" ? data.page : 0);
       setTotalPages(typeof data?.totalPages === "number" ? data.totalPages : 1);
     } catch (error) {
-      console.log("Something went wrong. Please try again", error);
+      console.log("Что-то пошло не так. Пожалуйста, попробуйте снова", error);
     } finally {
       setLoading(false);
     }
@@ -67,7 +63,7 @@ const Expense = () => {
       const list = Array.isArray(res.data) ? res.data : [];
       setCategories(list.map((c) => ({ ...c, _id: c?._id ?? c?.id })));
     } catch (error) {
-      console.error("Failed to load categories", error);
+      console.error("Не удалось загрузить категории", error);
     }
   };
 
@@ -75,17 +71,17 @@ const Expense = () => {
     const { category, generalCategory, description, amount, date, icon } = expense;
 
     if (!category.trim()) {
-      toast.error("Category is required");
+      toast.error("Категория обязательна");
       return;
     }
 
     if (!amount || isNaN(amount) || Number(amount) <= 0) {
-      toast.error("Amount should be a valid number greater than 0.");
+      toast.error("Сумма должна быть числом больше 0");
       return;
     }
 
     if (!date) {
-      toast.error("Date is required");
+      toast.error("Дата обязательна");
       return;
     }
 
@@ -100,11 +96,11 @@ const Expense = () => {
       });
 
       setOpenAddExpenseModal(false);
-      toast.success("Expense added successfully");
+      toast.success("Расход успешно добавлен");
       fetchExpenseDetails(0);
     } catch (error) {
       console.error(
-        "Error adding expense:",
+        "Ошибка при добавлении расхода:",
         error.response?.data?.message || error.message
       );
     }
@@ -115,11 +111,11 @@ const Expense = () => {
       await axiosInstance.delete(API_PATHS.EXPENSE.DELETE_EXPENSE(id));
 
       setOpenDeleteAlert({ show: false, data: null });
-      toast.success("Expense details deleted successfully");
+      toast.success("Расход успешно удален");
       fetchExpenseDetails(0);
     } catch (error) {
       console.error(
-        "Error deleting expense:",
+        "Ошибка при удалении расхода:",
         error.response?.data?.message || error.message
       );
     }
@@ -139,8 +135,8 @@ const Expense = () => {
       link.parentNode.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch {
-      console.error("Error downloading expense details:", error);
-      toast.error("Failed to download expense details. Please try again.");
+      console.error("Ошибка при скачивании расходов:", error);
+      toast.error("Не удалось скачать расходы. Попробуйте снова.");
     }
   };
 
@@ -150,7 +146,7 @@ const Expense = () => {
   }, []);
 
   return (
-    <DashboardLayout activeMenu="Expense">
+    <DashboardLayout activeMenu="Расходы">
       <div className="my-5 mx-auto">
         <CategoryManager categories={categories} onChange={fetchCategories} />
 
@@ -158,26 +154,26 @@ const Expense = () => {
           <div className="flex flex-wrap items-end gap-3">
             <div>
               <GlassDatePicker
-                label="From"
+                label="От"
                 value={filters.from}
                 onChange={(v) => setFilters((p) => ({ ...p, from: v }))}
               />
             </div>
             <div>
               <GlassDatePicker
-                label="To"
+                label="До"
                 value={filters.to}
                 onChange={(v) => setFilters((p) => ({ ...p, to: v }))}
               />
             </div>
             <div className="flex-1 min-w-[220px]">
-              <label className="text-xs text-gray-500">General category</label>
+              <label className="text-xs text-gray-500">Категория</label>
               <select
                 className="custom-date-input"
                 value={filters.generalCategory}
                 onChange={(e) => setFilters((p) => ({ ...p, generalCategory: e.target.value }))}
               >
-                <option value="">All</option>
+                <option value="">Все</option>
                 {categories.map((c) => (
                   <option key={c?._id ?? c?.id ?? c.name} value={c.name}>
                     {c.name}
@@ -190,7 +186,7 @@ const Expense = () => {
               className="add-btn add-btn-fill h-[52px] px-6 text-base"
               onClick={() => fetchExpenseDetails(0)}
             >
-              Apply
+              Применить
             </button>
           </div>
         </div>
@@ -219,10 +215,10 @@ const Expense = () => {
             disabled={page <= 0}
             onClick={() => fetchExpenseDetails(page - 1)}
           >
-            Prev
+            Назад
           </button>
           <div className="text-xs text-gray-500">
-            Page {page + 1} of {Math.max(totalPages, 1)}
+            Страница {page + 1} из {Math.max(totalPages, 1)}
           </div>
           <button
             type="button"
@@ -230,14 +226,14 @@ const Expense = () => {
             disabled={page + 1 >= totalPages}
             onClick={() => fetchExpenseDetails(page + 1)}
           >
-            Next
+            Вперед
           </button>
         </div>
 
         <Modal
           isOpen={openAddExpenseModal}
           onClose={() => setOpenAddExpenseModal(false)}
-          title=" Add Expense"
+          title="Добавить расход"
         >
           <AddExpenseForm onAddExpense={handleAddExpense} categories={categories} />
         </Modal>
@@ -245,10 +241,10 @@ const Expense = () => {
         <Modal
           isOpen={openDeleteAlert.show}
           onClose={() => setOpenDeleteAlert({ show: false, data: null })}
-          title="Delete Expenses"
+          title="Удалить расход"
         >
           <DeleteAlert
-            content="Are you  sure you want to delete this expense deteil?"
+            content="Вы уверены, что хотите удалить этот расход?"
             onDelete={() => deleteExpense(openDeleteAlert.data)}
           />
         </Modal>

@@ -53,12 +53,11 @@ public class AdminController {
 
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers(@AuthenticationPrincipal User user,
-                                         @RequestParam(value = "from", required = false) String from,
-                                         @RequestParam(value = "to", required = false) String to) {
+                                         @RequestParam(value = "c", required = false) String from,
+                                         @RequestParam(value = "gj", required = false) String to) {
         if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Access denied. Only for administrators."));
+            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
         }
-        // Фильтрацию по датам убрали — всегда возвращаем всех пользователей
         List<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
@@ -68,12 +67,11 @@ public class AdminController {
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User user,
                                         @PathVariable("id") Long id) {
         if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Access denied. Only for administrators."));
+            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
         }
         return userRepository.findById(id)
                 .map(u -> {
                     try {
-                        // Delete dependent records first to satisfy FK constraints.
                         notificationRepository.deleteByUser(u);
                         budgetRepository.deleteByUser(u);
                         expenseRepository.deleteByUser(u);
@@ -81,15 +79,15 @@ public class AdminController {
                         categoryRepository.deleteByUser(u);
                         newsRepository.deleteByAuthor(u);
                         userRepository.delete(u);
-                        return ResponseEntity.ok(Map.of("message", "User deleted successfully"));
+                        return ResponseEntity.ok(Map.of("message", "Пользователь успешно удален"));
                     } catch (DataIntegrityViolationException ex) {
                         return ResponseEntity.status(409).body(Map.of(
-                                "message", "Cannot delete user because related records still exist",
+                                "message", "Невозможно удалить пользователя, поскольку связанные записи все еще существуют.",
                                 "error", ex.getMostSpecificCause() != null ? ex.getMostSpecificCause().getMessage() : ex.getMessage()
                         ));
                     }
                 })
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "User not found")));
+                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Пользователь не найден")));
     }
 
     public record NewsRequest(String title, String content, String type) {}
@@ -98,10 +96,10 @@ public class AdminController {
     public ResponseEntity<?> addNews(@AuthenticationPrincipal User user,
                                      @RequestBody NewsRequest body) {
         if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Access denied. Only for administrators."));
+            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
         }
         if (body.title() == null || body.content() == null || body.type() == null) {
-            return ResponseEntity.badRequest().body(Map.of("message", "All fields are required"));
+            return ResponseEntity.badRequest().body(Map.of("message", "Все поля обязательны для заполнения"));
         }
         News news = News.builder()
                 .title(body.title())
@@ -117,7 +115,7 @@ public class AdminController {
     @GetMapping("/content/admin")
     public ResponseEntity<?> getAllContent(@AuthenticationPrincipal User user) {
         if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Access denied. Only for administrators."));
+            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
         }
         List<News> content = newsRepository.findAll();
         return ResponseEntity.ok(content);
@@ -127,7 +125,7 @@ public class AdminController {
                                         @PathVariable("id") Long id,
                                         @RequestBody NewsRequest body) {
         if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Access denied. Only for administrators."));
+            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
         }
         return newsRepository.findById(id)
                 .map(existing -> {
@@ -139,21 +137,21 @@ public class AdminController {
                     return (Object) existing;
                 })
                 .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "News item not found.")));
+                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Новость не найдена.")));
     }
 
     @DeleteMapping("/content/{id}")
     public ResponseEntity<?> deleteNews(@AuthenticationPrincipal User user,
                                         @PathVariable("id") Long id) {
         if (!isAdmin(user)) {
-            return ResponseEntity.status(403).body(Map.of("message", "Access denied. Only for administrators."));
+            return ResponseEntity.status(403).body(Map.of("message", "Доступ запрещен. Только для администраторов."));
         }
         return newsRepository.findById(id)
                 .map(existing -> {
                     newsRepository.delete(existing);
-                    return (Object) Map.of("message", "News item deleted successfully.");
+                    return (Object) Map.of("message", "Новость успешно удалена.");
                 })
                 .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "News item not found.")));
+                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Новость не найдена.")));
     }
 }

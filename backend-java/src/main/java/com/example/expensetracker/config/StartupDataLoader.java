@@ -18,7 +18,6 @@ public class StartupDataLoader {
                                               @Value("${ADMIN_EMAIL:admin@expensetracker.com}") String adminEmail,
                                               @Value("${ADMIN_PASSWORD:123456}") String adminPassword) {
         return args -> {
-            // Всегда гарантируем, что пользователь с adminEmail существует и имеет роль ADMIN
             userRepository.findByEmail(adminEmail)
                     .ifPresentOrElse(user -> {
                         if (user.getRole() != User.Role.ADMIN) {

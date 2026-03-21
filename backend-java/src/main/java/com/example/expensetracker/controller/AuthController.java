@@ -79,7 +79,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest body) {
         var userOpt = userService.findByEmail(body.email());
         if (userOpt.isEmpty() || !passwordEncoder.matches(body.password(), userOpt.get().getPassword())) {
-            return ResponseEntity.badRequest().body(Map.of("messege", "Invalid credentials"));
+            return ResponseEntity.badRequest().body(Map.of("messege", "Неверные учетные данные"));
         }
         User user = userOpt.get();
         String token = jwtService.generateToken(user.getId());
@@ -93,7 +93,7 @@ public class AuthController {
     @GetMapping("/getUser")
     public ResponseEntity<?> getUser(@AuthenticationPrincipal User currentUser) {
         if (currentUser == null) {
-            return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
+            return ResponseEntity.status(401).body(Map.of("messege", "Несанкционированный"));
         }
         return ResponseEntity.ok(currentUser);
     }
@@ -109,7 +109,7 @@ public class AuthController {
             return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
         }
         User user = userService.findById(currentUser.getId())
-                .orElseThrow(() -> new IllegalStateException("User not found"));
+                .orElseThrow(() -> new IllegalStateException("Пользователь не найден"));
         if (fullName != null && !fullName.isBlank()) {
             user.setFullName(fullName);
         }
@@ -127,13 +127,13 @@ public class AuthController {
                         .toUriString();
                 user.setProfileImageUrl(imageUrl);
             } catch (IOException e) {
-                return ResponseEntity.status(500).body(Map.of("message", "File upload error"));
+                return ResponseEntity.status(500).body(Map.of("message", "Ошибка загрузки файла"));
             }
         }
         User saved = userService.save(user);
 
         return ResponseEntity.ok(Map.of(
-                "message", "Profile updated successfully",
+                "message", "Профиль успешно обновлен",
                 "user", saved
         ));
     }
@@ -141,14 +141,14 @@ public class AuthController {
     @PostMapping("/upload-image")
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile image) {
         if (image == null || image.isEmpty()) {
-            return ResponseEntity.badRequest().body(Map.of("message", "No file uploaded"));
+            return ResponseEntity.badRequest().body(Map.of("message", "Ни один файл не загружен"));
         }
         String fileName = System.currentTimeMillis() + "-" + image.getOriginalFilename();
         try {
             Path target = uploadRoot.resolve(fileName);
             image.transferTo(target.toFile());
         } catch (IOException e) {
-            return ResponseEntity.status(500).body(Map.of("message", "File upload error"));
+            return ResponseEntity.status(500).body(Map.of("message", "Ошибка загрузки файла"));
         }
         String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/uploads/")

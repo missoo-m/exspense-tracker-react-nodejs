@@ -102,7 +102,7 @@ const SmartCalendar = () => {
   return (
     <div className="card">
       <div className="flex items-center justify-between mb-4">
-        <h5 className="text-lg">Smart Calendar</h5>
+        <h5 className="text-lg">Умный календарь</h5>
         <div className="flex items-center gap-2">
           <button type="button" className="add-btn" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}>
             <LuChevronLeft />
@@ -117,7 +117,7 @@ const SmartCalendar = () => {
       </div>
 
       <div className="grid grid-cols-7 gap-2 mb-2 text-xs text-gray-500">
-        {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
+        {["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].map((d) => (
           <div key={d} className="text-center">{d}</div>
         ))}
       </div>
@@ -132,7 +132,7 @@ const SmartCalendar = () => {
           return (
             <div
               key={key}
-              title={sum ? `${key}: ${sum.toLocaleString()} spent` : `${key}: no expenses`}
+              title={sum ? `${key}: ${sum.toLocaleString()} потрачено` : `${key}: нет трат`}
               className="min-h-12 h-12 rounded-xl flex items-center justify-center text-sm transition-all duration-300 hover:scale-[1.03]"
               style={{ backgroundColor: bg, color: textColor }}
             >
@@ -143,7 +143,7 @@ const SmartCalendar = () => {
       </div>
 
       <div className="mt-4 flex items-center justify-end gap-2 text-xs text-gray-500">
-        <span>Low</span>
+        <span>Низкие</span>
         <div className="flex items-center gap-1">
           {["#ffe5ec", "#ffcfd2", "#ffb3c6", "#ff8fab", "#e11d48"].map((c) => (
             <span
@@ -153,7 +153,7 @@ const SmartCalendar = () => {
             />
           ))}
         </div>
-        <span>High</span>
+        <span>Высокие</span>
       </div>
     </div>
   );

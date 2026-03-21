@@ -12,7 +12,6 @@ import java.util.Map;
 @Service
 public class CurrencyRateService {
 
-    // DTO под ответ NBRB
     public record NbrbRate(
             String Cur_Abbreviation,
             Double Cur_OfficialRate,

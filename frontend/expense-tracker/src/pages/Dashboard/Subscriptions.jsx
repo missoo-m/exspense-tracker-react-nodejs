@@ -91,19 +91,19 @@ const Subscriptions = () => {
       <div className="my-5 mx-auto">
         <div className="card">
           <div className="flex items-center justify-between mb-4">
-            <h4 className="text-xl font-semibold text-gray-900">Active Subscriptions</h4>
+            <h4 className="text-xl font-semibold text-gray-900">Активные подписки</h4>
             <button
               type="button"
               className="add-btn add-btn-fill h-[52px] px-6 text-base"
               onClick={() => setShowAdd((v) => !v)}
             >
               <LuPlus className="text-lg" />
-              Add subscription
+              Добавить подписку
             </button>
           </div>
 
           <div className="mb-4 text-sm text-gray-600">
-            Monthly subscriptions total:{" "}
+            Общая сумма подписок в месяц:{" "}
             <span className="font-semibold text-[#e11d48]">
               <CountUpValue value={monthlyTotal} /> $
             </span>
@@ -113,14 +113,14 @@ const Subscriptions = () => {
             <div className="mb-5 grid grid-cols-1 md:grid-cols-4 gap-3">
               <input
                 className="custom-date-input"
-                placeholder="Name"
+                placeholder="Название"
                 value={form.name}
                 onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
               />
               <input
                 className="custom-date-input"
                 type="number"
-                placeholder="Amount"
+                placeholder="Сумма"
                 value={form.amount}
                 onChange={(e) => setForm((p) => ({ ...p, amount: e.target.value }))}
               />
@@ -131,7 +131,7 @@ const Subscriptions = () => {
                 onChange={(e) => setForm((p) => ({ ...p, nextDate: e.target.value }))}
               />
               <button type="button" className="add-btn add-btn-fill h-[52px] px-6 text-base" onClick={addSubscription}>
-                Save
+                Сохранить
               </button>
             </div>
           )}
@@ -142,15 +142,15 @@ const Subscriptions = () => {
                 <div>
                   <div className="font-medium text-gray-900">{s.name}</div>
                   <div className="text-xs text-gray-500">
-                    Next payment: {new Date(s.nextDate).toLocaleDateString()}
+                    Следующий платеж: {new Date(s.nextDate).toLocaleDateString()}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-[#7f1d3f]">
-                    {Number(s.amount).toLocaleString()} $/month
+                    {Number(s.amount).toLocaleString()} $/мес
                   </span>
                   {isDueSoon(s.nextDate) ? (
-                    <LuBellRing className="text-[#e11d48]" title="Payment in next 3 days" />
+                    <LuBellRing className="text-[#e11d48]" title="Платеж в ближайшие 3 дня" />
                   ) : null}
                 </div>
               </div>

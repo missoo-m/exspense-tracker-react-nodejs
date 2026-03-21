@@ -32,7 +32,7 @@ public class BudgetController {
     public ResponseEntity<?> getByMonth(@AuthenticationPrincipal User user,
                                         @RequestParam("month") String month) {
         if (user == null) {
-            return ResponseEntity.status(401).body(Map.of("message", "Unauthorized"));
+            return ResponseEntity.status(401).body(Map.of("message", "Несанкционирован"));
         }
         String m = Budget.normalizeMonth(month);
         List<Budget> budgets = budgetRepository.findByUserAndMonthOrderByGeneralCategoryAsc(user, m);
@@ -48,7 +48,7 @@ public class BudgetController {
         String month = Budget.normalizeMonth(body.month());
         String category = body.generalCategory().trim();
         if (body.amount() == null || body.amount() < 0) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Invalid amount"));
+            return ResponseEntity.badRequest().body(Map.of("message", "Неверная сумма"));
         }
 
         Budget budget = budgetRepository.findByUserAndMonthAndGeneralCategory(user, month, category)
@@ -71,9 +71,9 @@ public class BudgetController {
         return budgetRepository.findByIdAndUser(id, user)
                 .map(b -> {
                     budgetRepository.delete(b);
-                    return ResponseEntity.ok(Map.of("message", "Budget deleted"));
+                    return ResponseEntity.ok(Map.of("message", "Бюджет удален."));
                 })
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Budget not found")));
+                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Бюджет не найден")));
     }
 }
 

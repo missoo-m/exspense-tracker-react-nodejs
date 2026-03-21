@@ -26,8 +26,8 @@ const ManageUsers = () => {
             const list = Array.isArray(data) ? data : Array.isArray(data?.items) ? data.items : [];
             setUsers(list.map((u) => ({ ...u, _id: u?._id ?? u?.id })));
         } catch (error) {
-            toast.error(error?.response?.data?.message || `Failed to load users (${error?.response?.status || "network"})`);
-            console.error("Fetch users error:", error?.response?.status, error?.response?.data || error);
+            toast.error(error?.response?.data?.message || `Не удалось загрузить пользователей (${error?.response?.status || "сеть"})`);
+            console.error("Ошибка при получении данных о пользователях:", error?.response?.status, error?.response?.data || error);
         } finally {
             setLoading(false);
         }
@@ -38,11 +38,11 @@ const ManageUsers = () => {
             await axiosInstance.delete(API_PATHS.ADMIN.DELETE_USER(userId));
 
             setOpenDeleteAlert({ show: false, data: null });
-            toast.success("User details deleted successfully");
+            toast.success("Данные пользователя успешно удалены");
             fetchUsers();
         } catch (error) {
-            toast.error(error?.response?.data?.message || `Failed to delete user (${error?.response?.status || "network"})`);
-            console.error("Error deleting user:", error?.response?.status, error?.response?.data || error);
+            toast.error(error?.response?.data?.message || `Не удалось удалить пользователя. (${error?.response?.status || "network"})`);
+            console.error("Ошибка при удалении пользователя:", error?.response?.status, error?.response?.data || error);
         }
     };
 
@@ -55,27 +55,27 @@ const ManageUsers = () => {
 
     return (
         <DashboardLayout activeMenu="Manage Users">
-            <h2 className="text-xl font-bold text-[#7f1d3f] mb-6">Manage Users</h2>
+            <h2 className="text-xl font-bold text-[#7f1d3f] mb-6">Управление пользователями</h2>
 
             {loading ? (
                 <div className="card p-6 border-[#ffdde8]">
-                    <p className="text-center text-gray-500">Loading...</p>
+                    <p className="text-center text-gray-500">Загрузка...</p>
                 </div>
             ) : (
                 <div className="card p-6 overflow-x-auto border-[#ffdde8]">
                     <div className="flex items-center justify-end mb-4">
                         <button type="button" className="add-btn add-btn-fill h-[52px] px-6 text-base" onClick={fetchUsers}>
-                            Refresh
+                            Обновить
                         </button>
                     </div>
                     <table className="min-w-full divide-y divide-[#ffb3c6]">
 
                         <thead className="bg-[#ffe5ec] rounded-t-2xl">
                             <tr>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Full name</th>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Email</th>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Role</th>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Actions</th>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">ФИО</th>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Почта</th>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Роль</th>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-[#e11d48] uppercase tracking-wider">Действия</th>
                             </tr>
                         </thead>
 

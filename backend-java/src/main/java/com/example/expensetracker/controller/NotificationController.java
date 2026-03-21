@@ -42,7 +42,7 @@ public class NotificationController {
                     return ResponseEntity.ok(n);
                 })
                 .<ResponseEntity<?>>map(r -> r)
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Notification not found")));
+                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Уведомление не найдено")));
     }
 }
 

@@ -20,7 +20,7 @@ public class UserService {
 
     public User register(String fullName, String email, String rawPassword, String role, String profileImageUrl) {
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new IllegalArgumentException("Email already in use");
+            throw new IllegalArgumentException("Электронная почта уже используется");
         }
 
         User.Role userRole = "ADMIN".equalsIgnoreCase(role) ? User.Role.ADMIN : User.Role.NORMAL;

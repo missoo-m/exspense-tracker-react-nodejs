@@ -12,7 +12,7 @@ const COLORS = [
 
 const ExpensesByCategoryChart = ({ data = [] }) => {
   const chartData = data.map((item) => ({
-    name: item.category || "Uncategorized",
+    name: item.category || "Без категории",
     amount: item.total || 0,
   }));
 
@@ -21,12 +21,12 @@ const ExpensesByCategoryChart = ({ data = [] }) => {
   return (
     <div className="card">
       <div className="flex items-center justify-between">
-        <h5 className="text-lg">Expenses by Category</h5>
+        <h5 className="text-lg">Расходы по категориям</h5>
       </div>
 
       <CustomPieChart
         data={chartData}
-        label="Total Expense"
+        label="Всего расходов"
         totalAmount={`$${total.toFixed(2)}`}
         colors={COLORS}
         showTextAnchor

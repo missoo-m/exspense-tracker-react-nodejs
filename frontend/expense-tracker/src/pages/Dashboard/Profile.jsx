@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import Input from "../../components/Inputs/Input";
@@ -31,7 +30,7 @@ const Profile = () => {
     e.preventDefault();
 
     if (!fullName.trim()) {
-      toast.error("Full Name is required");
+      toast.error("Имя обязательно");
       return;
     }
 
@@ -51,13 +50,13 @@ const Profile = () => {
       });
 
       updateUser(res.data.user);
-      toast.success("Profile updated successfully");
+      toast.success("Профиль успешно обновлен");
       setPreviewUrl(res.data.user.profileImageUrl);
       setProfilePic(null);
     } catch (error) {
       console.error(error);
       toast.error(
-        error.response?.data?.message || "Something went wrong. Please try again"
+        error.response?.data?.message || "Что-то пошло не так. Попробуйте снова"
       );
     } finally {
       setLoading(false);
@@ -65,9 +64,9 @@ const Profile = () => {
   };
 
   return (
-    <DashboardLayout activeMenu="Profile">
+    <DashboardLayout activeMenu="Профиль">
       <div className="max-w-md mx-auto mt-10 p-6 card border-[#ffdde8]">
-        <h3 className="text-xl font-semibold mb-4 text-[#7f1d3f]">Edit Profile</h3>
+        <h3 className="text-xl font-semibold mb-4 text-[#7f1d3f]">Редактировать профиль</h3>
 
         <form onSubmit={handleUpdateProfile}>
           <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
@@ -75,16 +74,16 @@ const Profile = () => {
           <Input
             value={fullName}
             onChange={({ target }) => setFullName(target.value)}
-            label="Full Name"
-            placeholder="John Doe"
+            label="Полное имя"
+            placeholder="Иван Иванов"
             type="text"
           />
 
           <Input
             value={user?.email || ""}
-            label="Email Address"
+            label="Email адрес"
             type="text"
-            placeholder="Email cannot be changed"
+            placeholder="Email нельзя изменить"
             disabled
           />
 
@@ -93,7 +92,7 @@ const Profile = () => {
             className="add-btn add-btn-fill h-[52px] px-6 text-base mt-4 w-full justify-center"
             disabled={loading}
           >
-            {loading ? "Updating..." : "Update Profile"}
+            {loading ? "Обновление..." : "Обновить профиль"}
           </button>
         </form>
       </div>
@@ -102,6 +101,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-
-

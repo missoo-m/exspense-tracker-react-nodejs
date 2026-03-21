@@ -45,7 +45,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             Authentication authentication
     ) throws IOException, ServletException {
         if (!(authentication instanceof OAuth2AuthenticationToken token)) {
-            response.sendError(500, "Invalid authentication type");
+            response.sendError(500, "Неверный тип аутентификации");
             return;
         }
 

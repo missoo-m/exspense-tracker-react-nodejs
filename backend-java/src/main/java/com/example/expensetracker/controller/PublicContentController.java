@@ -45,7 +45,7 @@ public class PublicContentController {
             return ResponseEntity.ok(payload);
         } catch (Exception ex) {
             return ResponseEntity.status(500).body(Map.of(
-                    "message", "Failed to load currency rates from NBRB",
+                    "message", "Не удалось загрузить курсы валют из НБРБ.",
                     "error", ex.getMessage()
             ));
         }

@@ -31,14 +31,14 @@ public class CategoryController {
         // Если у пользователя еще нет категорий — создаём базовый набор
         if (categoryRepository.countByUser(user) == 0) {
             List<String> defaults = Arrays.asList(
-                    "Transport",
-                    "Food",
-                    "Home",
-                    "Health",
-                    "Entertainment",
-                    "Shopping",
-                    "Education",
-                    "Other"
+                    "Транспорт",
+                    "Еда",
+                    "Дом",
+                    "Здоровье",
+                    "Развлечение",
+                    "Шоппинг",
+                    "Образование",
+                    "Другое"
             );
             defaults.forEach(name -> {
                 if (!categoryRepository.existsByUserAndName(user, name)) {
@@ -63,10 +63,10 @@ public class CategoryController {
         }
         String name = body.name();
         if (name == null || name.isBlank()) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Category name is required"));
+            return ResponseEntity.badRequest().body(Map.of("message", "Укажите название категории."));
         }
         if (categoryRepository.existsByUserAndName(user, name.trim())) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Category with this name already exists"));
+            return ResponseEntity.badRequest().body(Map.of("message", "Категория с таким названием уже существует."));
         }
         Category category = Category.builder()
                 .user(user)
@@ -86,7 +86,7 @@ public class CategoryController {
         }
         String name = body.name();
         if (name == null || name.isBlank()) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Category name is required"));
+            return ResponseEntity.badRequest().body(Map.of("message", "Укажите название категории."));
         }
         return categoryRepository.findByIdAndUser(id, user)
                 .map(existing -> {
@@ -94,13 +94,13 @@ public class CategoryController {
                     if (!existing.getName().equals(trimmed)
                             && categoryRepository.existsByUserAndName(user, trimmed)) {
                         return ResponseEntity.badRequest()
-                                .body(Map.of("message", "Category with this name already exists"));
+                                .body(Map.of("message", "Категория с таким названием уже существует."));
                     }
                     existing.setName(trimmed);
                     categoryRepository.save(existing);
                     return ResponseEntity.ok(existing);
                 })
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Category not found")));
+                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Категория не найдена")));
     }
 
     @DeleteMapping("/{id}")
@@ -112,8 +112,8 @@ public class CategoryController {
         return categoryRepository.findByIdAndUser(id, user)
                 .map(existing -> {
                     categoryRepository.delete(existing);
-                    return ResponseEntity.ok(Map.of("message", "Category deleted successfully"));
+                    return ResponseEntity.ok(Map.of("message", "Категория успешно удалена"));
                 })
-                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Category not found")));
+                .orElseGet(() -> ResponseEntity.status(404).body(Map.of("message", "Категория не найдена")));
     }
 }

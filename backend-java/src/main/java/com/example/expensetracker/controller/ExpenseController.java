@@ -60,7 +60,7 @@ public class ExpenseController {
             return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
         }
         if (body.generalCategory() == null || body.generalCategory().isBlank()) {
-            return ResponseEntity.badRequest().body(Map.of("message", "General category is required"));
+            return ResponseEntity.badRequest().body(Map.of("message", "Требуется общая категория"));
         }
         String category = body.category();
         if (category == null || category.isBlank()) {
@@ -96,8 +96,8 @@ public class ExpenseController {
                                     .type(type)
                                     .month(month)
                                     .generalCategory(body.generalCategory())
-                                    .message("Budget exceeded for " + body.generalCategory() + " (" + month + "). Budget: "
-                                            + budget.getAmount() + ", spent: " + spent)
+                                    .message("Бюджет превышен на " + body.generalCategory() + " (" + month + "). Бюджет: "
+                                            + budget.getAmount() + ", потраченно: " + spent)
                                     .build());
                         }
                     }
@@ -109,7 +109,7 @@ public class ExpenseController {
     @GetMapping("/get")
     public ResponseEntity<?> getAll(@AuthenticationPrincipal User user,
                                     @RequestParam(value = "page", defaultValue = "0") int page,
-                                    @RequestParam(value = "size", defaultValue = "10") int size,
+                                    @RequestParam(value = "size", defaultValue = "5") int size,
                                     @RequestParam(value = "from", required = false) String from,
                                     @RequestParam(value = "to", required = false) String to,
                                     @RequestParam(value = "generalCategory", required = false) String generalCategory,
@@ -140,7 +140,7 @@ public class ExpenseController {
             return ResponseEntity.status(401).body(Map.of("messege", "Unauthorized"));
         }
         expenseRepository.deleteById(id);
-        return ResponseEntity.ok(Map.of("messege", " Expense deleted successfully "));
+        return ResponseEntity.ok(Map.of("messege", " Расходы успешно удалены "));
     }
 
     @GetMapping("/downloadexcel")
@@ -151,14 +151,14 @@ public class ExpenseController {
         List<Expense> list = expenseRepository.findByUserOrderByDateDesc(user);
 
         Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Expense");
+        Sheet sheet = workbook.createSheet("Расходы");
         int rowIdx = 0;
         Row header = sheet.createRow(rowIdx++);
-        header.createCell(0).setCellValue("General Category");
-        header.createCell(1).setCellValue("Category");
-        header.createCell(2).setCellValue("Description");
-        header.createCell(3).setCellValue("Amount");
-        header.createCell(4).setCellValue("Date");
+        header.createCell(0).setCellValue("Общая категория");
+        header.createCell(1).setCellValue("Категория");
+        header.createCell(2).setCellValue("Описание");
+        header.createCell(3).setCellValue("Сумма");
+        header.createCell(4).setCellValue("Дата");
 
         for (Expense expense : list) {
             Row row = sheet.createRow(rowIdx++);

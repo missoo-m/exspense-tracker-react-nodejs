@@ -35,7 +35,7 @@ const ManageContent = () => {
             const sortedContent = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
             setContentList(sortedContent);
         } catch (error) {
-            toast.error("Failed to load content.");
+            toast.error("Не удалось загрузить контент.");
         } finally {
             setLoading(false);
         }
@@ -65,7 +65,7 @@ const ManageContent = () => {
         if (!editingItem) return;
 
         if (formData.type === 'news' && (!formData.title || !formData.content)) {
-            toast.error("Title and content are required for news.");
+            toast.error("Для новостных сообщений необходимы заголовок и содержание.");
             return;
         }
 
@@ -73,19 +73,19 @@ const ManageContent = () => {
         let updatePath = API_PATHS.ADMIN.UPDATE_CONTENT(editingItem?._id ?? editingItem?.id);
 
         if (formData.type === 'currency') {
-            toast.error("Currency rates should be updated via the dedicated form (Add New Content).");
+            toast.error("Курсы валют следует обновлять через специальную форму (Добавить новый контент).");
             return;
         }
 
         try {
             await axiosInstance.put(updatePath, dataToSend);
 
-            toast.success("The content element is being updated successfully.");
+            toast.success("Элемент содержимого успешно обновляется.");
             setEditingItem(null);
             fetchContent();
         } catch (error) {
-            toast.error(error.response?.data?.message || "Error updating content.");
-            console.error("Update Content Error:", error);
+            toast.error(error.response?.data?.message || "Ошибка при обновлении содержимого.");
+            console.error("Ошибка обновления содержимого:", error);
         }
     };
 
@@ -94,11 +94,11 @@ const ManageContent = () => {
             await axiosInstance.delete(API_PATHS.ADMIN.DELETE_CONTENT(id));
 
             setOpenDeleteAlert({ show: false, data: null });
-            toast.success("Content details deleted successfully");
+            toast.success("Сведения о контенте успешно удалены.");
             fetchContent();
         } catch (error) {
             console.error(
-                "Error deleting content:",
+                "Ошибка при удалении содержимого:",
                 error.response?.data?.message || error.message
             );
         }
@@ -107,7 +107,7 @@ const ManageContent = () => {
     const handleAddContent = async (e) => {
         e.preventDefault();
         if (newContent.type === 'news' && (!newContent.title || !newContent.content)) {
-            toast.error("Title and content are required for news.");
+            toast.error("Для новостных сообщений необходимы заголовок и содержание.");
             return;
         }
 
@@ -119,7 +119,7 @@ const ManageContent = () => {
             };
 
             await axiosInstance.post(API_PATHS.ADMIN.ADD_CONTENT, dataToSend);
-            toast.success("News content added!");
+            toast.success("Добавлен новостной контент!");
 
             setNewContent({
                 type: 'news',
@@ -129,7 +129,7 @@ const ManageContent = () => {
             fetchContent();
 
         } catch (error) {
-            toast.error(error.response?.data?.message || "Failed to add content.");
+            toast.error(error.response?.data?.message || "Не удалось добавить контент.");
         }
     };
 
@@ -144,32 +144,32 @@ const ManageContent = () => {
     return (
         <DashboardLayout activeMenu="Manage Content">
 
-            <h2 className="text-xl font-bold text-[#7f1d3f] mb-6">Public Content Management</h2>
+            <h2 className="text-xl font-bold text-[#7f1d3f] mb-6">Управление общедоступным контентом</h2>
             <div className="card mb-8 p-8 border-[#ffdde8]">
 
                 <form onSubmit={handleAddContent}>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div className="md:col-span-1">
-                            <label className="text-sm font-medium text-slate-600 mb-1 block">Content type</label>
+                            <label className="text-sm font-medium text-slate-600 mb-1 block">Тип контента</label>
                             <select
                                 name="type"
                                 value={newContent.type}
                                 onChange={handleInputChange}
                                 className="custom-date-input"
                             >
-                                <option value="news">News</option>
+                                <option value="news">Новости</option>
                             </select>
                         </div>
 
                         {newContent.type === 'news' && (
                             <div className="md:col-span-2">
-                                <label className="text-sm font-medium text-slate-600 mb-1 block">Heading</label>
+                                <label className="text-sm font-medium text-slate-600 mb-1 block">Заголовок</label>
 
                                 <input
                                     name="title"
                                     value={newContent.title}
                                     onChange={handleInputChange}
-                                    placeholder="Enter news title"
+                                    placeholder="Введите название новости"
                                     type="text"
                                     className="custom-date-input"
                                 />
@@ -180,14 +180,14 @@ const ManageContent = () => {
 
                     <div className="mb-4">
                         <label className="text-sm font-medium text-slate-600 mb-1 block">
-                            News content
+                            Новостной контент
                         </label>
                         <textarea
                             name="content"
                             value={newContent.content}
                             onChange={handleInputChange}
                             rows={6}
-                            placeholder='Describe the news in detail. Use paragraphs for better readability.'
+                            placeholder='Подробно опишите новость. Для лучшей читаемости используйте абзацы.'
                             className="custom-date-input w-full h-48 resize-y p-4"
                         />
                     </div>
@@ -196,15 +196,15 @@ const ManageContent = () => {
 
                     <button type="submit" className="add-btn add-btn-fill h-[52px] px-6 text-base mt-6 w-full flex items-center justify-center gap-2">
                         <LuPlus size={18} />
-                        ADD NEWS
+                        Добавить новость 
                     </button>
                 </form>
             </div>
 
-            <h3 className="text-xl font-semibold mb-4 text-[#7f1d3f]">Existing Content({contentList.length})</h3>
+            <h3 className="text-xl font-semibold mb-4 text-[#7f1d3f]">Существующий контент({contentList.length})</h3>
 
             {loading ? (
-                <p>Loading...</p>
+                <p>Загрузка...</p>
             ) : (
                 <div className="space-y-4">
                     {contentList.map((item) => (
@@ -228,7 +228,7 @@ const ManageContent = () => {
                                     {formatContentPreview(item)}
                                 </p>
                                 <p className="text-xs text-gray-400 mt-3">
-                                    Published: {new Date(item.date).toLocaleString()}
+                                    Опубликовано: {new Date(item.date).toLocaleString()}
                                 </p>
                             </div>
 
@@ -267,7 +267,7 @@ const ManageContent = () => {
                                     name="title"
                                     value={formData.title}
                                     onChange={handleEditFormChange}
-                                    placeholder="Enter news title"
+                                    placeholder="Введите название новости"
                                     type="text"
                                     className="custom-date-input w-full"
                                 />
@@ -281,12 +281,12 @@ const ManageContent = () => {
                                 onChange={handleEditFormChange}
                                 rows={4}
                                 className="custom-date-input w-full resize-y p-4"
-                                placeholder="Enter content..."
+                                placeholder="Введите контент..."
                                 disabled={editingItem.type === 'currency'}
                             />
                             {editingItem.type === 'currency' && (
                                 <p className="text-xs text-red-500 mt-1">
-                                    Exchange rates can only be edited through the "Add new content" form (PUT request).
+                                    Курсы валют можно редактировать только через форму «Добавить новый контент».
                                 </p>
                             )}
                         </div>
@@ -297,14 +297,14 @@ const ManageContent = () => {
                                 onClick={() => setEditingItem(null)}
                                 className="secondary-btn"
                             >
-                                Cancel
+                                Отвена
                             </button>
                             <button
                                 type="submit"
                                 className="add-btn"
                                 disabled={editingItem.type === 'currency'}
                             >
-                                SAVE CHANGES
+                                Сохранить
                             </button>
                         </div>
                     </form>
@@ -316,13 +316,13 @@ const ManageContent = () => {
 
                 onClose={() => setOpenDeleteAlert({ show: false, data: null })}
 
-                title="Delete element"
+                title="Удалить элемент"
 
             >
 
                 <DeleteAlert
 
-                    content="Are you sure you want to delete this element deteil?"
+                    content="Вы уверены, что хотите удалить эту деталь элемента?"
 
                     onDelete={() => handleDelete(openDeleteAlert.data)}
 
