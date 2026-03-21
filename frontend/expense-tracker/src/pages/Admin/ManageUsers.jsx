@@ -55,20 +55,19 @@ const ManageUsers = () => {
 
     return (
         <DashboardLayout activeMenu="Manage Users">
-            <h2 className="text-xl font-bold text-gray-800 mb-6">Manage Users</h2>
+            <h2 className="text-xl font-bold text-[#7f1d3f] mb-6">Manage Users</h2>
 
             {loading ? (
-                <div className="p-6 bg-white rounded-xl shadow-lg">
+                <div className="card p-6 border-[#ffdde8]">
                     <p className="text-center text-gray-500">Loading...</p>
                 </div>
             ) : (
-                <div
-                    className="
-            p-6 bg-white rounded-2xl 
-            shadow-[0px_10px_30px_rgba(251,111,146,0.12)] 
-            overflow-x-auto border border-[#ffe5ec]
-        "
-                >
+                <div className="card p-6 overflow-x-auto border-[#ffdde8]">
+                    <div className="flex items-center justify-end mb-4">
+                        <button type="button" className="add-btn add-btn-fill h-[52px] px-6 text-base" onClick={fetchUsers}>
+                            Refresh
+                        </button>
+                    </div>
                     <table className="min-w-full divide-y divide-[#ffb3c6]">
 
                         <thead className="bg-[#ffe5ec] rounded-t-2xl">
@@ -102,11 +101,11 @@ const ManageUsers = () => {
                                         <button
                                             onClick={() => setOpenDeleteAlert({ show: true, data: user._id })}
                                             className={`
-                                    p-2 rounded-full 
+                                    custom-date-input h-10 px-3 w-auto
                                     transition duration-200
                                     ${user.role === 'ADMIN'
                                                     ? 'text-gray-400 cursor-not-allowed'
-                                                    : 'text-gray-400 bg-white hover:bg-white hover:text-red-500' 
+                                                    : 'text-red-500 bg-white hover:bg-[#ffe5ec] hover:text-red-600' 
                                                 }
                                 `}
                                             disabled={user.role === 'ADMIN'}

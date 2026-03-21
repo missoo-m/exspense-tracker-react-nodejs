@@ -5,7 +5,7 @@ import { API_PATHS } from "../../utils/apiPaths";
 import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { LuTrash2, LuPlus, LuPencil, LuChevronDown } from "react-icons/lu";
+import { LuTrash2, LuPlus, LuPencil } from "react-icons/lu";
 import Modal from "../../components/Modal";
 import DeleteAlert from "../../components/DeleteAlert";
 
@@ -144,69 +144,35 @@ const ManageContent = () => {
     return (
         <DashboardLayout activeMenu="Manage Content">
 
-            <h2 className="text-xl font-bold text-gray-800 mb-6">Public Content Management</h2>
-            <div className="mb-8 p-8 bg-white rounded-3xl 
-        shadow-[0px_10px_30px_rgba(251,111,146,0.12),_0px_0px_0px_rgba(255,255,255,1)] 
-        transition-all duration-500">
+            <h2 className="text-xl font-bold text-[#7f1d3f] mb-6">Public Content Management</h2>
+            <div className="card mb-8 p-8 border-[#ffdde8]">
 
                 <form onSubmit={handleAddContent}>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div className="md:col-span-1">
                             <label className="text-sm font-medium text-slate-600 mb-1 block">Content type</label>
-                            <div
-                                className="
-    w-full p-0 flex items-center 
-    rounded-full shadow-inner bg-white border border-gray-200
-    transition-all duration-300 
-    focus-within:ring-4 focus-within:ring-[#ffe5ec] focus-within:border-[#ffb3c6]
-"
+                            <select
+                                name="type"
+                                value={newContent.type}
+                                onChange={handleInputChange}
+                                className="custom-date-input"
                             >
-                                <span className="text-[#ff8fab] rounded-full px-4 py-2">
-                                    <LuChevronDown size={20} />
-                                </span>
-
-                                <select
-                                    name="type"
-                                    value={newContent.type}
-                                    onChange={handleInputChange}
-                                    className="
-                                        w-full bg-transparent outline-none 
-                                        py-2 pr-4 text-base cursor-pointer appearance-none
-                                    "
-                                >
-                                    <option value="news">News</option>
-                                </select>
-                            </div>
+                                <option value="news">News</option>
+                            </select>
                         </div>
 
                         {newContent.type === 'news' && (
                             <div className="md:col-span-2">
                                 <label className="text-sm font-medium text-slate-600 mb-1 block">Heading</label>
 
-                                <div
-                                    className="
-    w-full p-0 flex items-center 
-    rounded-full shadow-inner bg-white border border-gray-200
-    transition-all duration-300 
-    focus-within:ring-4 focus-within:ring-[#ffe5ec] focus-within:border-[#ffb3c6]
-"
-                                >
-                                    <span className="text-[#ff8fab] rounded-full px-4 py-2">
-                                        <LuPencil size={20} />
-                                    </span>
-
-                                    <input
-                                        name="title"
-                                        value={newContent.title}
-                                        onChange={handleInputChange}
-                                        placeholder="Enter news title"
-                                        type="text"
-                                        className="
-                                            w-full bg-transparent outline-none 
-                                            py-2 pr-4 text-base 
-                                        "
-                                    />
-                                </div>
+                                <input
+                                    name="title"
+                                    value={newContent.title}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter news title"
+                                    type="text"
+                                    className="custom-date-input"
+                                />
                             </div>
                         )}
 
@@ -222,51 +188,27 @@ const ManageContent = () => {
                             onChange={handleInputChange}
                             rows={6}
                             placeholder='Describe the news in detail. Use paragraphs for better readability.'
-                            className="
-    w-full resize-y p-4 text-base 
-    rounded-xl shadow-inner bg-white border border-gray-200
-    focus:ring-4 focus:ring-[#ffe5ec] focus:border-[#ffb3c6]
-    transition-all duration-300 h-48
-"
+                            className="custom-date-input w-full h-48 resize-y p-4"
                         />
                     </div>
 
 
 
-                    <button
-                        type="submit"
-                        className="
-        mt-6 w-full py-3 px-6 
-        bg-[#fb6f92] text-white font-bold 
-        rounded-full shadow-xl 
-        hover:bg-[#ff8fab] hover:shadow-2xl 
-        transition-all duration-300
-        
-        flex items-center justify-center gap-2
-    "
-                    >
+                    <button type="submit" className="add-btn add-btn-fill h-[52px] px-6 text-base mt-6 w-full flex items-center justify-center gap-2">
                         <LuPlus size={18} />
                         ADD NEWS
                     </button>
                 </form>
             </div>
 
-            <h3 className="text-xl font-semibold mb-4">Existing Content({contentList.length})</h3>
+            <h3 className="text-xl font-semibold mb-4 text-[#7f1d3f]">Existing Content({contentList.length})</h3>
 
             {loading ? (
                 <p>Loading...</p>
             ) : (
                 <div className="space-y-4">
                     {contentList.map((item) => (
-                        <div
-                            key={item?._id ?? item?.id}
-                            className="
-                                p-5 bg-white rounded-xl shadow-lg 
-                                flex justify-between items-start 
-                                transition-all duration-300
-                                hover:shadow-xl hover:scale-[1.01]
-                            "
-                        >
+                        <div key={item?._id ?? item?.id} className="p-5 bg-white rounded-xl border border-[#ffe5ec] flex justify-between items-start transition-all duration-300 hover:shadow-md hover:scale-[1.01]">
                             <div className="flex-grow">
                                 <span className={`
                                     text-xs font-bold px-3 py-1 rounded-full 
@@ -292,26 +234,14 @@ const ManageContent = () => {
 
                             <div className="flex space-x-2 shrink-0 pt-1">
                                 {item.type === 'news' && (
-                                    <button
-                                        onClick={() => handleEditClick(item)}
-                                        className="
-    p-2 rounded-full text-teal-600 bg-teal-50 
-    hover:bg-teal-600 hover:text-white 
-    transition duration-200
-"
-                                        title="Edit news"
-                                    >
+                                    <button onClick={() => handleEditClick(item)} className="p-2 rounded-full text-[#7f1d3f] bg-[#ffe5ec] hover:bg-[#ffb3c6] hover:text-white transition duration-200" title="Edit news">
                                         <LuPencil size={20} />
                                     </button>
                                 )}
 
                                 <button
                                     onClick={() => setOpenDeleteAlert({ show: true, data: item?._id ?? item?.id })}
-                                    className="
-                                        p-2 rounded-full text-gray-400 bg-white-50 
-                                        hover:bg-white hover:text-red-600 
-                                        transition duration-200
-                                    "
+                                    className="p-2 rounded-full text-gray-400 bg-white-50 hover:bg-[#ffe5ec] hover:text-red-600 transition duration-200"
                                     title="Delete content"
                                 >
                                     <LuTrash2 size={20} />
@@ -339,7 +269,7 @@ const ManageContent = () => {
                                     onChange={handleEditFormChange}
                                     placeholder="Enter news title"
                                     type="text"
-                                    className="input-box w-full"
+                                    className="custom-date-input w-full"
                                 />
                             </div>
                         )}
@@ -350,7 +280,7 @@ const ManageContent = () => {
                                 value={formData.content}
                                 onChange={handleEditFormChange}
                                 rows={4}
-                                className="input-box w-full resize-y"
+                                className="custom-date-input w-full resize-y p-4"
                                 placeholder="Enter content..."
                                 disabled={editingItem.type === 'currency'}
                             />

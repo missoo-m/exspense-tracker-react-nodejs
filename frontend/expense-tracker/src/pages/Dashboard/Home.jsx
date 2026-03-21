@@ -55,26 +55,26 @@ const Home =() =>{
   }, []);
 
   return (
-    <DashboardLayout activeMenu= "Dashboard">
+    <DashboardLayout activeMenu= "Главная">
       <div className="my-5 mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <InfoCard
             icon={<IoMdCard/>}
-            label= "Total Balance"
+            label= "Общий баланс"
             value= {addThousandsSeparator(dashboardData?.totalBalance || 0)}
             color= "bg-primary"
             />
 
             <InfoCard
             icon={<LuWalletMinimal/>}
-            label= "Total Income"
+            label= "Общий доход"
             value= {addThousandsSeparator(dashboardData?.totalIncome || 0)}
             color= "bg-income-soft"
             />
 
             <InfoCard
             icon={<LuHandCoins/>}
-            label= "Total Expense"
+            label= "Общий расход"
             value= {addThousandsSeparator(dashboardData?.totalExpense || 0)}
             color= "bg-expense-soft"
             />

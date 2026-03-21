@@ -59,7 +59,7 @@ const News = () => {
 
     return (
         <DashboardLayout activeMenu="News & Currencies">
-            <h4 className="text-xl font-bold text-gray-800 mb-6">News & Currencies</h4>
+            <h4 className="text-xl font-bold text-[#7f1d3f] mb-6">News & Currencies</h4>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6"> 
             
@@ -72,10 +72,10 @@ const News = () => {
 
                 <div className="col-span-1 lg:col-span-2 space-y-4"> 
                     
-                    <h3 className="text-xl font-bold text-[#ff8fab] mb-1">Latest News</h3>
+                    <h3 className="text-xl font-bold text-[#7f1d3f] mb-1">Latest News</h3>
                     
                     {loading && news.length === 0 ? (
-                        <div className="p-4 bg-white rounded-lg shadow-md">
+                        <div className="p-4 rounded-xl border border-[#ffe5ec] bg-white">
                              <p className="text-center text-sm text-gray-500">Loading news...</p>
                         </div>
                     ) : news.length > 0 ? (
@@ -83,15 +83,7 @@ const News = () => {
                         news.map((item, index) => (
                             <div 
                                 key={`${item._id}-${index}`}
-                                className="
-                                    /* Уменьшен padding: p-6 -> p-4 */
-                                    p-4 bg-white rounded-lg shadow-sm 
-                                    /* Уменьшена акцентная линия: border-l-4 -> border-l-3 */
-                                    border-l-3 border-[#ff8fab] 
-                                    transition-all duration-300
-                                    /* Уменьшена тень: hover:shadow-lg -> hover:shadow-md */
-                                    hover:shadow-md hover:translate-y-[-1px] 
-                                "
+                                className="p-4 bg-white rounded-xl border border-[#ffe5ec] transition-all duration-300 hover:shadow-md hover:translate-y-[-1px]"
                             >
                                 <h4 className="text-lg font-bold text-gray-800">{item.title}</h4>
                                 <p className="text-xs font-medium text-gray-500 mb-2">
@@ -102,7 +94,7 @@ const News = () => {
                         ))
                         
                     ) : (
-                        <p className="text-gray-600 p-4 bg-white rounded-lg shadow-md">No news available.</p>
+                        <p className="text-gray-600 p-4 bg-white rounded-xl border border-[#ffe5ec]">No news available.</p>
                     )}
                 </div>
             </div>

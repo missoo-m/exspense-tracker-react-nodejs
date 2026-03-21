@@ -8,6 +8,7 @@ const seed = [
   { id: "s1", name: "Spotify", amount: 199, nextDate: "2026-03-15" },
   { id: "r1", name: "Rent", amount: 15000, nextDate: "2026-04-01" },
 ];
+const LS_KEY = "expense_tracker_subscriptions";
 
 const CountUpValue = ({ value }) => {
   const [display, setDisplay] = useState(0);
@@ -41,6 +42,27 @@ const Subscriptions = () => {
     () => list.reduce((sum, x) => sum + (Number(x.amount) || 0), 0),
     [list]
   );
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        setList(parsed);
+      }
+    } catch {
+      // ignore invalid local cache
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(list));
+    } catch {
+      // ignore write issues
+    }
+  }, [list]);
 
   const isDueSoon = (nextDate) => {
     const now = new Date();

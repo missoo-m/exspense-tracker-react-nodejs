@@ -66,8 +66,8 @@ const Profile = () => {
 
   return (
     <DashboardLayout activeMenu="Profile">
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-        <h3 className="text-xl font-semibold mb-4">Edit Profile</h3>
+      <div className="max-w-md mx-auto mt-10 p-6 card border-[#ffdde8]">
+        <h3 className="text-xl font-semibold mb-4 text-[#7f1d3f]">Edit Profile</h3>
 
         <form onSubmit={handleUpdateProfile}>
           <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
@@ -90,7 +90,7 @@ const Profile = () => {
 
           <button
             type="submit"
-            className="btn-primary mt-4 w-full"
+            className="add-btn add-btn-fill h-[52px] px-6 text-base mt-4 w-full justify-center"
             disabled={loading}
           >
             {loading ? "Updating..." : "Update Profile"}

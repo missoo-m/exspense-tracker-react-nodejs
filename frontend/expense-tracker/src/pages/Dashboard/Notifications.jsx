@@ -40,10 +40,10 @@ const Notifications = () => {
   return (
     <DashboardLayout activeMenu="Notifications">
       <div className="my-5 mx-auto">
-        <div className="card">
+        <div className="card border-[#ffdde8]">
           <div className="flex items-center justify-between">
-            <h5 className="text-lg">Notifications</h5>
-            <button type="button" className="add-btn add-btn-fill" onClick={fetchAll}>
+            <h5 className="text-lg text-[#7f1d3f]">Notifications</h5>
+            <button type="button" className="add-btn add-btn-fill h-[52px] px-6 text-base" onClick={fetchAll}>
               Refresh
             </button>
           </div>
@@ -55,13 +55,13 @@ const Notifications = () => {
               {items.map((n) => (
                 <div
                   key={n._id}
-                  className={`p-4 rounded-lg border ${
-                    n.read ? "border-gray-200 bg-white" : "border-[#ffb3c6] bg-[#fff7f8]"
+                  className={`p-4 rounded-xl border transition-all duration-300 ${
+                    n.read ? "border-[#ffe5ec] bg-white" : "border-[#ffb3c6] bg-[#fff6f9]"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <div className="text-sm font-medium text-gray-800">{n.type}</div>
+                      <div className="text-sm font-medium text-[#7f1d3f]">{n.type}</div>
                       <div className="text-sm text-gray-700 mt-1">{n.message}</div>
                       <div className="text-xs text-gray-400 mt-2">
                         {n.month ? `${n.month} • ` : ""}
@@ -72,7 +72,7 @@ const Notifications = () => {
                     {!n.read && (
                       <button
                         type="button"
-                        className="text-xs text-primary underline"
+                        className="custom-date-input h-9 px-3 text-xs w-auto"
                         onClick={() => markRead(n._id)}
                       >
                         Mark read
